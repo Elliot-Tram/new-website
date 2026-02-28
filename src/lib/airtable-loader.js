@@ -1,7 +1,18 @@
 export function airtableLoader({ apiKey, baseId, tableName }) {
+	console.log('🔍 Airtable Loader Config:');
+	console.log('  - API Key:', apiKey ? `${apiKey.substring(0, 20)}... (${apiKey.length} chars)` : '❌ MISSING');
+	console.log('  - Base ID:', baseId || '❌ MISSING');
+	console.log('  - Table:', tableName || '❌ MISSING');
+
 	return {
 		name: 'airtable-loader',
 		async load() {
+			if (!apiKey || !baseId || !tableName) {
+				console.error('❌ Missing Airtable config, returning empty array');
+				return [];
+			}
+
+			console.log(`📡 Fetching from Airtable: ${baseId}/${tableName}...`);
 			const records = [];
 			let offset = null;
 
@@ -61,6 +72,7 @@ export function airtableLoader({ apiKey, baseId, tableName }) {
 				offset = data.offset;
 			} while (offset);
 
+			console.log(`✅ Loaded ${records.length} tools from Airtable`);
 			return records;
 		},
 	};

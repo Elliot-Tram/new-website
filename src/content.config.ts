@@ -19,9 +19,9 @@ const blog = defineCollection({
 
 const tools = defineCollection({
 	loader: airtableLoader({
-		apiKey: import.meta.env.AIRTABLE_API_KEY || process.env.AIRTABLE_API_KEY,
-		baseId: import.meta.env.AIRTABLE_BASE_ID || process.env.AIRTABLE_BASE_ID,
-		tableName: import.meta.env.AIRTABLE_TABLE_NAME || process.env.AIRTABLE_TABLE_NAME || 'Tools',
+		apiKey: process.env.AIRTABLE_API_KEY,
+		baseId: process.env.AIRTABLE_BASE_ID,
+		tableName: process.env.AIRTABLE_TABLE_NAME,
 	}),
 	schema: z.object({
 		name: z.string(),
@@ -39,6 +39,7 @@ const tools = defineCollection({
 			'Customer Support',
 			'Sales',
 			'Project Management',
+			'Enrichissement',
 		]),
 		subcategories: z.array(z.string()).optional(),
 		pricing: z.enum(['Free', 'Freemium', 'Paid']),

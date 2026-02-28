@@ -8,9 +8,8 @@ import { SITE_TITLE } from '../consts';
 
 const allTools = await getCollection('tools');
 const featuredTools = allTools
-	.filter(tool => tool.data.featured)
 	.sort((a, b) => b.data.rating - a.data.rating)
-	.slice(0, 3);
+	.slice(0, 6);
 ---
 
 <!doctype html>
@@ -167,7 +166,7 @@ const featuredTools = allTools
 
 	.hero-title {
 		font-size: clamp(2rem, 5vw, 3.5rem);
-		font-weight: 800;
+		font-weight: 700;
 		line-height: 1.1;
 		margin-bottom: 1.5rem;
 	}
@@ -267,7 +266,7 @@ const featuredTools = allTools
 
 	.stat-number {
 		font-size: 2.5rem;
-		font-weight: 800;
+		font-weight: 700;
 		color: var(--accent);
 		line-height: 1;
 	}
@@ -293,7 +292,7 @@ const featuredTools = allTools
 
 	.section-header h2 {
 		font-size: 2.25rem;
-		font-weight: 800;
+		font-weight: 700;
 		margin-bottom: 0.75rem;
 	}
 
@@ -371,7 +370,7 @@ const featuredTools = allTools
 
 	.cta-content h2 {
 		font-size: 2.5rem;
-		font-weight: 800;
+		font-weight: 700;
 		margin-bottom: 1rem;
 	}
 

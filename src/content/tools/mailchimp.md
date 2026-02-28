@@ -2,7 +2,7 @@
 name: "Mailchimp"
 tagline: "Plateforme d'email marketing tout-en-un"
 description: "Mailchimp est la référence en email marketing pour les PME. Interface simple, automatisations puissantes, et analytics détaillés pour optimiser vos campagnes."
-logo: "../../assets/blog-placeholder-3.jpg"
+logo: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=400"
 category: "Email Marketing"
 subcategories: ["Automation", "Analytics"]
 pricing: "Freemium"

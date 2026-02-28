@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { airtableLoader } from './lib/airtable-loader.js';
+import { googleSheetsLoader } from './lib/google-sheets-loader.js';
 
 const blog = defineCollection({
 	// Load Markdown and MDX files in the `src/content/blog/` directory.
@@ -18,10 +18,9 @@ const blog = defineCollection({
 });
 
 const tools = defineCollection({
-	loader: airtableLoader({
-		apiKey: process.env.AIRTABLE_API_KEY,
-		baseId: process.env.AIRTABLE_BASE_ID,
-		tableName: process.env.AIRTABLE_TABLE_NAME,
+	loader: googleSheetsLoader({
+		spreadsheetId: '1FNi4DvYJU5lGOKC8YLumTZWAB_tA69n1zwcoc8mioKY',
+		range: 'Outils!A1:Z1000', // Ajustez selon le nom de votre feuille
 	}),
 	schema: z.object({
 		name: z.string(),

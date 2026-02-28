@@ -19,7 +19,7 @@ const blog = defineCollection({
 
 const tools = defineCollection({
 	loader: googleSheetsLoader({
-		publishedUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRTp5hRsFXuzeTVOT-3EDOCO69_asKeNwl8xvqXYdFy749wio0LqTCGI2hAdk_9bujolt1c-Br_GyGo/pub?output=csv',
+		publishedUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRTp5hRsFXuzeTVOT-3EDOCO69_asKeNwl8xvqXYdFy749wio0LqTCGI2hAdk_9bujolt1c-Br_GyGo/pub?gid=1181367697&single=true&output=csv',
 	}),
 	schema: z.object({
 		name: z.string(),

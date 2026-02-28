@@ -6,10 +6,10 @@
 :root {
 	/* Light Mode (par défaut) */
 	/* Couleurs principales */
-	--accent: #4F46E5;
-	--accent-hover: #4338CA;
-	--accent-light: #EEF2FF;
-	
+	--accent: #f97316;
+	--accent-hover: #ea580c;
+	--accent-light: #fff7ed;
+
 	/* Texte */
 	--text-primary: #0F172A;
 	--text-secondary: #64748B;
@@ -31,7 +31,7 @@
 	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 	
 	/* Compatibilité anciennes variables */
-	--accent-dark: #4338CA;
+	--accent-dark: #c2410c;
 	--black: 15, 23, 42;
 	--gray: 100, 116, 139;
 	--gray-light: 241, 245, 249;
@@ -42,9 +42,9 @@
 [data-theme="dark"] {
 	/* Dark Mode */
 	/* Couleurs principales */
-	--accent: #818CF8;
-	--accent-hover: #A5B4FC;
-	--accent-light: #312E81;
+	--accent: #fb923c;
+	--accent-hover: #fdba74;
+	--accent-light: #431407;
 	
 	/* Texte */
 	--text-primary: #F1F5F9;
@@ -67,7 +67,7 @@
 	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 	
 	/* Compatibilité anciennes variables */
-	--accent-dark: #A5B4FC;
+	--accent-dark: #fdba74;
 	--black: 241, 245, 249;
 	--gray: 148, 163, 184;
 	--gray-light: 51, 65, 85;

@@ -1,0 +1,4 @@
+# Force rebuild of content collections
+.astro
+dist
+node_modules/.astro

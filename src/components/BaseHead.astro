@@ -23,6 +23,35 @@ const { title, description, image = FallbackImage } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Theme Script - Doit être exécuté AVANT le rendu pour éviter le flash -->
+<script is:inline>
+  // Fonction pour obtenir le thème initial
+  function getTheme() {
+    // 1. Vérifier localStorage
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    // 2. Vérifier la préférence système
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    // 3. Par défaut : light
+    return 'light';
+  }
+
+  // Appliquer le thème immédiatement
+  const theme = getTheme();
+  document.documentElement.setAttribute('data-theme', theme);
+
+  // Écouter les changements de préférence système
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      const newTheme = e.matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+    }
+  });
+</script>
 <link
 	rel="alternate"
 	type="application/rss+xml"

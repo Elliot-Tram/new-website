@@ -1,11 +1,8 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-
 interface Props {
 	name: string;
 	tagline: string;
-	logo: ImageMetadata;
+	logo: string; // URL string maintenant
 	category: string;
 	pricing: string;
 	priceRange?: string;
@@ -27,11 +24,11 @@ const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 	<a href={href} class="card-link">
 		<div class="card-header">
 			<div class="logo-wrapper">
-				<Image 
+				<img 
 					src={logo} 
 					alt={`${name} logo`}
-					width={80}
-					height={80}
+					width="80"
+					height="80"
 					loading="lazy"
 				/>
 			</div>

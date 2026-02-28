@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -32,7 +31,6 @@ const relatedTools = allTools
 		<BaseHead 
 			title={`${tool.data.name} - ${tool.data.tagline}`}
 			description={tool.data.description}
-			image={tool.data.logo}
 		/>
 	</head>
 	<body>
@@ -43,11 +41,12 @@ const relatedTools = allTools
 				<div class="tool-hero">
 					<div class="hero-content">
 						<div class="hero-logo">
-							<Image 
+							<img 
 								src={tool.data.logo} 
 								alt={`${tool.data.name} logo`}
-								width={120}
-								height={120}
+								width="120"
+								height="120"
+								loading="eager"
 							/>
 						</div>
 						<div class="hero-info">

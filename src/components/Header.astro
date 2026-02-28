@@ -46,47 +46,118 @@ import ThemeToggle from './ThemeToggle.astro';
 </header>
 <style>
 	header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
 		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-		transition: background-color 0.3s ease, box-shadow 0.3s ease;
+		padding: 0 2rem;
+		background: var(--bg-primary);
+		border-bottom: 1px solid var(--border-color);
+		backdrop-filter: blur(10px);
+		transition: all 0.3s ease;
 	}
 
 	:global([data-theme="dark"]) header {
-		background: rgb(var(--gray-light));
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 30%);
+		background: rgba(15, 23, 42, 0.8);
+		border-bottom-color: var(--border-color);
 	}
+
 	h2 {
 		margin: 0;
-		font-size: 1em;
+		font-size: 1.25rem;
+		font-weight: 800;
 	}
 
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
+		color: var(--text-primary);
+		transition: color 0.2s ease;
 	}
+
+	h2 a:hover {
+		color: var(--accent);
+	}
+
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 1em;
+		gap: 2rem;
+		height: 70px;
+		max-width: 1200px;
+		margin: 0 auto;
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.social-links,
-	.social-links a {
+
+	.internal-links {
 		display: flex;
+		gap: 0.5rem;
 	}
-	@media (max-width: 720px) {
+
+	nav a {
+		padding: 0.625rem 1rem;
+		color: var(--text-secondary);
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		border-bottom: none;
+	}
+
+	nav a:hover {
+		color: var(--text-primary);
+		background: var(--bg-secondary);
+	}
+
+	nav a.active {
+		color: var(--accent);
+		background: var(--accent-light);
+	}
+
+	.social-links {
+		display: flex;
+		gap: 0.75rem;
+	}
+
+	.social-links a {
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 8px;
+		padding: 0;
+		transition: all 0.2s ease;
+	}
+
+	.social-links a:hover {
+		background: var(--bg-secondary);
+		transform: translateY(-2px);
+	}
+
+	.social-links svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	@media (max-width: 768px) {
+		header {
+			padding: 0 1rem;
+		}
+
+		nav {
+			gap: 1rem;
+		}
+
+		.internal-links {
+			gap: 0.25rem;
+		}
+
+		nav a {
+			padding: 0.5rem 0.75rem;
+			font-size: 0.9375rem;
+		}
+
 		.social-links {
 			display: none;
 		}

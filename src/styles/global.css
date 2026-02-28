@@ -1,44 +1,86 @@
 /*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+  Modern Design System - Inspired by Allo
+  Clean, minimal, professional
  */
 
 :root {
 	/* Light Mode (par défaut) */
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px
-		rgba(var(--gray), 33%);
+	/* Couleurs principales */
+	--accent: #4F46E5;
+	--accent-hover: #4338CA;
+	--accent-light: #EEF2FF;
 	
-	/* Couleurs de fond */
-	--bg-primary: #ffffff;
-	--bg-secondary: linear-gradient(rgba(var(--gray-light), 50%), #fff);
+	/* Texte */
+	--text-primary: #0F172A;
+	--text-secondary: #64748B;
+	--text-muted: #94A3B8;
+	
+	/* Fond */
+	--bg-primary: #FFFFFF;
+	--bg-secondary: #F8FAFC;
+	--bg-tertiary: #F1F5F9;
+	
+	/* Bordures */
+	--border-color: #E2E8F0;
+	--border-light: #F1F5F9;
+	
+	/* Ombres */
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+	
+	/* Compatibilité anciennes variables */
+	--accent-dark: #4338CA;
+	--black: 15, 23, 42;
+	--gray: 100, 116, 139;
+	--gray-light: 241, 245, 249;
+	--gray-dark: 15, 23, 42;
+	--box-shadow: var(--shadow-md);
 }
 
 [data-theme="dark"] {
 	/* Dark Mode */
-	--accent: #5b7eff;
-	--accent-dark: #3d5fff;
-	--black: 240, 240, 245;
-	--gray: 150, 160, 180;
-	--gray-light: 60, 65, 75;
-	--gray-dark: 220, 225, 235;
-	--gray-gradient: rgba(30, 35, 45, 50%), #0d1117;
-	--box-shadow:
-		0 2px 6px rgba(0, 0, 0, 40%), 0 8px 24px rgba(0, 0, 0, 50%), 0 16px 32px
-		rgba(0, 0, 0, 60%);
+	/* Couleurs principales */
+	--accent: #818CF8;
+	--accent-hover: #A5B4FC;
+	--accent-light: #312E81;
 	
-	/* Couleurs de fond dark */
-	--bg-primary: #0d1117;
-	--bg-secondary: linear-gradient(rgba(30, 35, 45, 50%), #0d1117);
+	/* Texte */
+	--text-primary: #F1F5F9;
+	--text-secondary: #94A3B8;
+	--text-muted: #64748B;
+	
+	/* Fond */
+	--bg-primary: #0F172A;
+	--bg-secondary: #1E293B;
+	--bg-tertiary: #334155;
+	
+	/* Bordures */
+	--border-color: #334155;
+	--border-light: #1E293B;
+	
+	/* Ombres */
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+	
+	/* Compatibilité anciennes variables */
+	--accent-dark: #A5B4FC;
+	--black: 241, 245, 249;
+	--gray: 148, 163, 184;
+	--gray-light: 51, 65, 85;
+	--gray-dark: 241, 245, 249;
+	--box-shadow: var(--shadow-md);
 }
+/* Reset et base */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -53,112 +95,177 @@
 	font-style: normal;
 	font-display: swap;
 }
+
 body {
-	font-family: "Atkinson", sans-serif;
+	font-family: "Atkinson", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	text-align: left;
-	background: var(--bg-secondary) no-repeat;
-	background-size: 100% 600px;
 	background-color: var(--bg-primary);
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
+	color: var(--text-primary);
+	font-size: 16px;
+	line-height: 1.6;
 	transition: background-color 0.3s ease, color 0.3s ease;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
+
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 2rem 1.5rem;
 }
+
+@media (max-width: 768px) {
+	main {
+		padding: 1.5rem 1rem;
+	}
+}
+/* Typographie */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
+	margin: 0 0 1rem 0;
+	color: var(--text-primary);
 	line-height: 1.2;
+	font-weight: 700;
+	letter-spacing: -0.02em;
 }
+
 h1 {
-	font-size: 3.052em;
+	font-size: 2.5rem;
+	line-height: 1.1;
 }
+
 h2 {
-	font-size: 2.441em;
+	font-size: 2rem;
 }
+
 h3 {
-	font-size: 1.953em;
+	font-size: 1.5rem;
 }
+
 h4 {
-	font-size: 1.563em;
+	font-size: 1.25rem;
 }
+
 h5 {
-	font-size: 1.25em;
+	font-size: 1.125rem;
 }
+
+h6 {
+	font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+	h1 {
+		font-size: 2rem;
+	}
+	h2 {
+		font-size: 1.75rem;
+	}
+	h3 {
+		font-size: 1.375rem;
+	}
+}
+
+p {
+	margin: 0 0 1rem 0;
+	color: var(--text-secondary);
+	line-height: 1.7;
+}
+
 strong,
 b {
 	font-weight: 700;
+	color: var(--text-primary);
 }
+
 a {
 	color: var(--accent);
+	text-decoration: none;
+	transition: color 0.2s ease;
 }
+
 a:hover {
-	color: var(--accent);
+	color: var(--accent-hover);
 }
-p {
-	margin-bottom: 1em;
-}
+
 .prose p {
-	margin-bottom: 2em;
+	margin-bottom: 1.5rem;
 }
-textarea {
+/* Formulaires */
+textarea,
+input {
 	width: 100%;
 	font-size: 16px;
+	padding: 0.75rem;
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	background: var(--bg-primary);
+	color: var(--text-primary);
+	transition: border-color 0.2s ease;
 }
-input {
-	font-size: 16px;
+
+textarea:focus,
+input:focus {
+	outline: none;
+	border-color: var(--accent);
 }
+
+/* Tables */
 table {
 	width: 100%;
+	border-collapse: collapse;
 }
+
+/* Images */
 img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 8px;
+	border-radius: 12px;
 }
+
+/* Code */
 code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
+	padding: 0.2em 0.4em;
+	background-color: var(--bg-tertiary);
+	border-radius: 4px;
+	font-size: 0.9em;
+	font-family: 'Courier New', Courier, monospace;
+	color: var(--accent);
 }
+
 pre {
-	padding: 1.5em;
-	border-radius: 8px;
+	padding: 1.5rem;
+	border-radius: 12px;
+	background-color: var(--bg-tertiary);
+	overflow-x: auto;
 }
+
 pre > code {
 	all: unset;
+	color: var(--text-primary);
 }
+
+/* Blockquotes */
 blockquote {
 	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0;
-	font-size: 1.333em;
+	padding: 1rem 0 1rem 1.5rem;
+	margin: 1.5rem 0;
+	font-size: 1.125rem;
+	font-style: italic;
+	color: var(--text-secondary);
 }
+
+/* HR */
 hr {
 	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+	border-top: 1px solid var(--border-color);
+	margin: 2rem 0;
 }
 
 .sr-only {

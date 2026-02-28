@@ -1,19 +1,28 @@
-export function googleSheetsLoader({ spreadsheetId, gid = 0 }) {
+export function googleSheetsLoader({ spreadsheetId, gid = 0, publishedUrl }) {
   console.log('🔍 Google Sheets CSV Loader Config:');
   console.log('  - Spreadsheet ID:', spreadsheetId || '❌ MISSING');
   console.log('  - GID (Sheet ID):', gid);
+  console.log('  - Published URL:', publishedUrl || 'Not provided');
 
   return {
     name: 'google-sheets-csv-loader',
     async load() {
-      if (!spreadsheetId) {
-        console.error('❌ Missing Google Sheets spreadsheet ID');
+      if (!spreadsheetId && !publishedUrl) {
+        console.error('❌ Missing Google Sheets spreadsheet ID or published URL');
         return [];
       }
 
       try {
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
-        console.log(`📡 Fetching CSV from Google Sheets: ${csvUrl}`);
+        // Essayer d'abord avec l'URL publiée si fournie
+        let csvUrl;
+        if (publishedUrl) {
+          csvUrl = publishedUrl;
+        } else {
+          // Sinon utiliser l'export direct
+          csvUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
+        }
+        
+        console.log(`📡 Fetching CSV from: ${csvUrl}`);
 
         const response = await fetch(csvUrl);
         

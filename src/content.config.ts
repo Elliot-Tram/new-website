@@ -19,8 +19,7 @@ const blog = defineCollection({
 
 const tools = defineCollection({
 	loader: googleSheetsLoader({
-		spreadsheetId: '1FNi4DvYJU5lGOKC8YLumTZWAB_tA69n1zwcoc8mioKY',
-		gid: 0, // ID de l'onglet (0 = premier onglet)
+		publishedUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRTp5hRsFXuzeTVOT-3EDOCO69_asKeNwl8xvqXYdFy749wio0LqTCGI2hAdk_9bujolt1c-Br_GyGo/pub?output=csv',
 	}),
 	schema: z.object({
 		name: z.string(),

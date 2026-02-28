@@ -20,7 +20,7 @@ const blog = defineCollection({
 const tools = defineCollection({
 	loader: googleSheetsLoader({
 		spreadsheetId: '1FNi4DvYJU5lGOKC8YLumTZWAB_tA69n1zwcoc8mioKY',
-		range: 'Outils!A1:Z1000', // Ajustez selon le nom de votre feuille
+		gid: 0, // ID de l'onglet (0 = premier onglet)
 	}),
 	schema: z.object({
 		name: z.string(),

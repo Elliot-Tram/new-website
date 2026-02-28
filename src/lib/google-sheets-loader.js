@@ -1,46 +1,69 @@
-import { google } from 'googleapis';
-
-export function googleSheetsLoader({ spreadsheetId, range }) {
-  console.log('🔍 Google Sheets Loader Config:');
+export function googleSheetsLoader({ spreadsheetId, gid = 0 }) {
+  console.log('🔍 Google Sheets CSV Loader Config:');
   console.log('  - Spreadsheet ID:', spreadsheetId || '❌ MISSING');
-  console.log('  - Range:', range || '❌ MISSING');
+  console.log('  - GID (Sheet ID):', gid);
 
   return {
-    name: 'google-sheets-loader',
+    name: 'google-sheets-csv-loader',
     async load() {
-      if (!spreadsheetId || !range) {
-        console.error('❌ Missing Google Sheets config');
+      if (!spreadsheetId) {
+        console.error('❌ Missing Google Sheets spreadsheet ID');
         return [];
       }
 
       try {
-        console.log(`📡 Fetching from Google Sheets: ${spreadsheetId}...`);
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
+        console.log(`📡 Fetching CSV from Google Sheets: ${csvUrl}`);
 
-        // Authentification publique (pour sheets publiques)
-        const sheets = google.sheets({ version: 'v4' });
+        const response = await fetch(csvUrl);
         
-        const response = await sheets.spreadsheets.values.get({
-          spreadsheetId,
-          range,
-          key: process.env.GOOGLE_SHEETS_API_KEY, // Optionnel si le sheet est public
-        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-        const rows = response.data.values;
+        const csvText = await response.text();
+        const lines = csvText.split('\n').filter(line => line.trim());
         
-        if (!rows || rows.length === 0) {
+        if (lines.length === 0) {
           console.log('⚠️ No data found in sheet');
           return [];
         }
 
+        // Parser CSV simple (gère les guillemets)
+        function parseCSVLine(line) {
+          const values = [];
+          let current = '';
+          let inQuotes = false;
+
+          for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            
+            if (char === '"') {
+              inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+              values.push(current.trim());
+              current = '';
+            } else {
+              current += char;
+            }
+          }
+          values.push(current.trim());
+          return values;
+        }
+
         // Première ligne = headers
-        const headers = rows[0];
+        const headers = parseCSVLine(lines[0]);
         const tools = [];
 
-        // Convertir chaque ligne en objet
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          const fields = {};
+        console.log('📋 Headers détectés:', headers);
 
+        // Convertir chaque ligne en objet
+        for (let i = 1; i < lines.length; i++) {
+          const row = parseCSVLine(lines[i]);
+          
+          if (row.length < 2 || !row[0]) continue; // Skip empty rows
+          
+          const fields = {};
           headers.forEach((header, index) => {
             fields[header] = row[index] || '';
           });
@@ -78,7 +101,7 @@ export function googleSheetsLoader({ spreadsheetId, range }) {
         return tools;
 
       } catch (error) {
-        console.error('❌ Google Sheets API Error:', error.message);
+        console.error('❌ Google Sheets CSV Error:', error.message);
         return [];
       }
     },

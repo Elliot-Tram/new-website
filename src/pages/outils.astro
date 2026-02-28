@@ -1,0 +1,361 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { SITE_TITLE } from '../consts';
+
+const allTools = await getCollection('tools');
+const sortedTools = allTools.sort((a, b) => {
+	// Featured first
+	if (a.data.featured && !b.data.featured) return -1;
+	if (!a.data.featured && b.data.featured) return 1;
+	// Then by rating
+	return b.data.rating - a.data.rating;
+});
+
+// Get unique categories
+const categories = [...new Set(allTools.map(tool => tool.data.category))].sort();
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead 
+			title={`Tous les outils - ${SITE_TITLE}`} 
+			description="Découvrez notre catalogue complet d'outils SaaS pour le marketing, growth et GTM. Filtrez par catégorie, prix et note." 
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="tools-header">
+				<h1>Tous les outils</h1>
+				<p class="subtitle">Découvrez {allTools.length} outils soigneusement sélectionnés pour booster votre croissance</p>
+			</section>
+
+			<!-- Filters -->
+			<section class="filters-section">
+				<div class="search-bar">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="11" cy="11" r="8"/>
+						<path d="m21 21-4.35-4.35"/>
+					</svg>
+					<input 
+						type="text" 
+						id="search-input" 
+						placeholder="Rechercher un outil..." 
+						class="search-input"
+					/>
+				</div>
+
+				<div class="filter-groups">
+					<div class="filter-group">
+						<label for="category-filter">Catégorie</label>
+						<select id="category-filter" class="filter-select">
+							<option value="">Toutes les catégories</option>
+							{categories.map(category => (
+								<option value={category}>{category}</option>
+							))}
+						</select>
+					</div>
+
+					<div class="filter-group">
+						<label for="pricing-filter">Tarification</label>
+						<select id="pricing-filter" class="filter-select">
+							<option value="">Tous les prix</option>
+							<option value="Free">Gratuit</option>
+							<option value="Freemium">Freemium</option>
+							<option value="Paid">Payant</option>
+						</select>
+					</div>
+
+					<div class="filter-group">
+						<label for="sort-filter">Trier par</label>
+						<select id="sort-filter" class="filter-select">
+							<option value="rating">Meilleure note</option>
+							<option value="name">Nom (A-Z)</option>
+							<option value="price-low">Prix (croissant)</option>
+							<option value="price-high">Prix (décroissant)</option>
+						</select>
+					</div>
+				</div>
+			</section>
+
+			<!-- Tools Grid -->
+			<section class="tools-grid" id="tools-container">
+				{sortedTools.map((tool) => (
+					<div 
+						class="tool-item" 
+						data-name={tool.data.name.toLowerCase()}
+						data-category={tool.data.category}
+						data-pricing={tool.data.pricing}
+						data-rating={tool.data.rating}
+						data-price-range={tool.data.priceRange || 'none'}
+					>
+						<ToolCard
+							name={tool.data.name}
+							tagline={tool.data.tagline}
+							logo={tool.data.logo}
+							category={tool.data.category}
+							pricing={tool.data.pricing}
+							priceRange={tool.data.priceRange}
+							startingPrice={tool.data.startingPrice}
+							rating={tool.data.rating}
+							href={`/outils/${tool.id}`}
+							featured={tool.data.featured}
+						/>
+					</div>
+				))}
+			</section>
+
+			<div id="no-results" class="no-results" style="display: none;">
+				<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+					<circle cx="11" cy="11" r="8"/>
+					<path d="m21 21-4.35-4.35"/>
+				</svg>
+				<h3>Aucun outil trouvé</h3>
+				<p>Essayez de modifier vos filtres ou votre recherche</p>
+			</div>
+		</main>
+		<Footer />
+
+		<script>
+			// Filtering logic
+			const searchInput = document.getElementById('search-input') as HTMLInputElement;
+			const categoryFilter = document.getElementById('category-filter') as HTMLSelectElement;
+			const pricingFilter = document.getElementById('pricing-filter') as HTMLSelectElement;
+			const sortFilter = document.getElementById('sort-filter') as HTMLSelectElement;
+			const toolsContainer = document.getElementById('tools-container') as HTMLElement;
+			const noResults = document.getElementById('no-results') as HTMLElement;
+
+			function filterAndSortTools() {
+				const searchTerm = searchInput.value.toLowerCase();
+				const selectedCategory = categoryFilter.value;
+				const selectedPricing = pricingFilter.value;
+				const sortBy = sortFilter.value;
+
+				const toolItems = Array.from(toolsContainer.querySelectorAll('.tool-item')) as HTMLElement[];
+				
+				// Filter
+				let visibleCount = 0;
+				toolItems.forEach(item => {
+					const name = item.dataset.name || '';
+					const category = item.dataset.category || '';
+					const pricing = item.dataset.pricing || '';
+
+					const matchesSearch = name.includes(searchTerm);
+					const matchesCategory = !selectedCategory || category === selectedCategory;
+					const matchesPricing = !selectedPricing || pricing === selectedPricing;
+
+					if (matchesSearch && matchesCategory && matchesPricing) {
+						item.style.display = 'block';
+						visibleCount++;
+					} else {
+						item.style.display = 'none';
+					}
+				});
+
+				// Show/hide no results message
+				noResults.style.display = visibleCount === 0 ? 'flex' : 'none';
+
+				// Sort visible items
+				const visibleItems = toolItems.filter(item => item.style.display !== 'none');
+				visibleItems.sort((a, b) => {
+					switch(sortBy) {
+						case 'name':
+							return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+						case 'rating':
+							return parseFloat(b.dataset.rating || '0') - parseFloat(a.dataset.rating || '0');
+						case 'price-low':
+							const priceA = getPriceValue(a.dataset.priceRange || 'none');
+							const priceB = getPriceValue(b.dataset.priceRange || 'none');
+							return priceA - priceB;
+						case 'price-high':
+							const priceA2 = getPriceValue(a.dataset.priceRange || 'none');
+							const priceB2 = getPriceValue(b.dataset.priceRange || 'none');
+							return priceB2 - priceA2;
+						default:
+							return 0;
+					}
+				});
+
+				// Reorder DOM
+				visibleItems.forEach(item => toolsContainer.appendChild(item));
+			}
+
+			function getPriceValue(range: string): number {
+				const priceMap: { [key: string]: number } = {
+					'$': 1,
+					'$$': 2,
+					'$$$': 3,
+					'$$$$': 4,
+					'none': 0
+				};
+				return priceMap[range] || 0;
+			}
+
+			// Event listeners
+			searchInput?.addEventListener('input', filterAndSortTools);
+			categoryFilter?.addEventListener('change', filterAndSortTools);
+			pricingFilter?.addEventListener('change', filterAndSortTools);
+			sortFilter?.addEventListener('change', filterAndSortTools);
+
+			// URL params support
+			const urlParams = new URLSearchParams(window.location.search);
+			const categoryParam = urlParams.get('category');
+			if (categoryParam && categoryFilter) {
+				categoryFilter.value = categoryParam;
+				filterAndSortTools();
+			}
+		</script>
+	</body>
+</html>
+
+<style>
+	.tools-header {
+		text-align: center;
+		margin-bottom: 3rem;
+		padding-top: 2rem;
+	}
+
+	.tools-header h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		margin-bottom: 1rem;
+		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.subtitle {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+	}
+
+	/* Filters */
+	.filters-section {
+		background: var(--bg-secondary);
+		padding: 2rem;
+		border-radius: 16px;
+		margin-bottom: 3rem;
+		border: 1px solid var(--border-color);
+	}
+
+	.search-bar {
+		position: relative;
+		margin-bottom: 1.5rem;
+	}
+
+	.search-bar svg {
+		position: absolute;
+		left: 1rem;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--text-muted);
+		pointer-events: none;
+	}
+
+	.search-input {
+		width: 100%;
+		padding: 0.875rem 1rem 0.875rem 3rem;
+		border: 1px solid var(--border-color);
+		border-radius: 10px;
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		font-size: 1rem;
+		transition: all 0.2s ease;
+	}
+
+	.search-input:focus {
+		outline: none;
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px var(--accent-light);
+	}
+
+	.filter-groups {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 1rem;
+	}
+
+	.filter-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.filter-group label {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.filter-select {
+		padding: 0.75rem 1rem;
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		font-size: 0.9375rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.filter-select:focus {
+		outline: none;
+		border-color: var(--accent);
+	}
+
+	/* Tools Grid */
+	.tools-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+		gap: 2rem;
+		margin-bottom: 4rem;
+	}
+
+	.no-results {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 4rem 2rem;
+		text-align: center;
+		color: var(--text-secondary);
+	}
+
+	.no-results svg {
+		margin-bottom: 1.5rem;
+		opacity: 0.3;
+	}
+
+	.no-results h3 {
+		font-size: 1.5rem;
+		margin-bottom: 0.5rem;
+		color: var(--text-primary);
+	}
+
+	@media (max-width: 768px) {
+		.tools-header h1 {
+			font-size: 2rem;
+		}
+
+		.subtitle {
+			font-size: 1rem;
+		}
+
+		.tools-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.filter-groups {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

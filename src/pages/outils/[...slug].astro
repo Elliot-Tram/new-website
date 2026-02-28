@@ -1,0 +1,555 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ToolCard from '../../components/ToolCard.astro';
+
+export const getStaticPaths = (async () => {
+	const tools = await getCollection('tools');
+	return tools.map((tool) => ({
+		params: { slug: tool.id },
+		props: { tool },
+	}));
+}) satisfies GetStaticPaths;
+
+const { tool } = Astro.props;
+const { Content } = await render(tool);
+
+// Get related tools (same category, different tool)
+const allTools = await getCollection('tools');
+const relatedTools = allTools
+	.filter(t => t.data.category === tool.data.category && t.id !== tool.id)
+	.sort((a, b) => b.data.rating - a.data.rating)
+	.slice(0, 3);
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead 
+			title={`${tool.data.name} - ${tool.data.tagline}`}
+			description={tool.data.description}
+			image={tool.data.logo}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<!-- Tool Header -->
+			<article class="tool-page">
+				<div class="tool-hero">
+					<div class="hero-content">
+						<div class="hero-logo">
+							<Image 
+								src={tool.data.logo} 
+								alt={`${tool.data.name} logo`}
+								width={120}
+								height={120}
+							/>
+						</div>
+						<div class="hero-info">
+							<div class="breadcrumb">
+								<a href="/outils">Outils</a>
+								<span>/</span>
+								<span>{tool.data.category}</span>
+							</div>
+							<h1>{tool.data.name}</h1>
+							<p class="tagline">{tool.data.tagline}</p>
+							
+							<div class="hero-meta">
+								<div class="meta-item">
+									<span class="meta-label">Catégorie</span>
+									<a href={`/outils?category=${tool.data.category}`} class="category-badge">
+										{tool.data.category}
+									</a>
+								</div>
+								<div class="meta-item">
+									<span class="meta-label">Tarification</span>
+									<span class="pricing-badge">{tool.data.pricing}</span>
+								</div>
+								<div class="meta-item">
+									<span class="meta-label">Note</span>
+									<div class="rating">
+										<span class="star">★</span>
+										<span class="rating-value">{tool.data.rating.toFixed(1)}/5</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="hero-cta">
+								<a href={tool.data.affiliateLink} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+									Essayer {tool.data.name}
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/>
+									</svg>
+								</a>
+								<a href={tool.data.website} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+									Site officiel
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Quick Info -->
+				<div class="quick-info">
+					{tool.data.startingPrice && (
+						<div class="info-card">
+							<h3>💰 Prix</h3>
+							<p>{tool.data.startingPrice}</p>
+						</div>
+					)}
+					{tool.data.bestFor && tool.data.bestFor.length > 0 && (
+						<div class="info-card">
+							<h3>👥 Idéal pour</h3>
+							<ul>
+								{tool.data.bestFor.map(item => <li>{item}</li>)}
+							</ul>
+						</div>
+					)}
+					{tool.data.integrations && tool.data.integrations.length > 0 && (
+						<div class="info-card">
+							<h3>🔗 Intégrations</h3>
+							<div class="integrations">
+								{tool.data.integrations.map(integration => (
+									<span class="integration-badge">{integration}</span>
+								))}
+							</div>
+						</div>
+					)}
+				</div>
+
+				<!-- Pros & Cons -->
+				{(tool.data.pros || tool.data.cons) && (
+					<div class="pros-cons">
+						{tool.data.pros && tool.data.pros.length > 0 && (
+							<div class="pros">
+								<h3>✅ Points forts</h3>
+								<ul>
+									{tool.data.pros.map(pro => <li>{pro}</li>)}
+								</ul>
+							</div>
+						)}
+						{tool.data.cons && tool.data.cons.length > 0 && (
+							<div class="cons">
+								<h3>❌ Points faibles</h3>
+								<ul>
+									{tool.data.cons.map(con => <li>{con}</li>)}
+								</ul>
+							</div>
+						)}
+					</div>
+				)}
+
+				<!-- Content -->
+				<div class="tool-content prose">
+					<Content />
+				</div>
+
+				<!-- CTA -->
+				<div class="cta-box">
+					<h3>Prêt à essayer {tool.data.name} ?</h3>
+					<p>Commencez gratuitement et boostez votre croissance dès aujourd'hui</p>
+					<a href={tool.data.affiliateLink} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+						Essayer {tool.data.name}
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/>
+						</svg>
+					</a>
+				</div>
+
+				<!-- Related Tools -->
+				{relatedTools.length > 0 && (
+					<div class="related-section">
+						<h2>Outils similaires</h2>
+						<div class="related-grid">
+							{relatedTools.map((relatedTool) => (
+								<ToolCard
+									name={relatedTool.data.name}
+									tagline={relatedTool.data.tagline}
+									logo={relatedTool.data.logo}
+									category={relatedTool.data.category}
+									pricing={relatedTool.data.pricing}
+									priceRange={relatedTool.data.priceRange}
+									startingPrice={relatedTool.data.startingPrice}
+									rating={relatedTool.data.rating}
+									href={`/outils/${relatedTool.id}`}
+								/>
+							))}
+						</div>
+					</div>
+				)}
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.tool-page {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	/* Hero */
+	.tool-hero {
+		padding: 2rem 0;
+		margin-bottom: 3rem;
+	}
+
+	.hero-content {
+		display: flex;
+		gap: 2rem;
+		align-items: flex-start;
+	}
+
+	.hero-logo {
+		flex-shrink: 0;
+		width: 120px;
+		height: 120px;
+		background: var(--bg-secondary);
+		border-radius: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		border: 1px solid var(--border-color);
+	}
+
+	.hero-logo img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		border-radius: 0;
+	}
+
+	.hero-info {
+		flex: 1;
+	}
+
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--text-secondary);
+		margin-bottom: 1rem;
+	}
+
+	.breadcrumb a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+
+	.tool-page h1 {
+		font-size: 2.5rem;
+		font-weight: 800;
+		margin-bottom: 0.5rem;
+	}
+
+	.tagline {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-meta {
+		display: flex;
+		gap: 2rem;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.meta-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.meta-label {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.category-badge,
+	.pricing-badge {
+		display: inline-block;
+		padding: 0.375rem 0.75rem;
+		border-radius: 6px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.category-badge {
+		background: var(--bg-tertiary);
+		color: var(--text-primary);
+	}
+
+	.category-badge:hover {
+		background: var(--accent-light);
+		color: var(--accent);
+	}
+
+	.pricing-badge {
+		background: var(--accent-light);
+		color: var(--accent);
+	}
+
+	.rating {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.star {
+		color: #FFA500;
+		font-size: 1.25rem;
+	}
+
+	.rating-value {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.hero-cta {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.875rem 1.75rem;
+		border-radius: 10px;
+		font-weight: 600;
+		font-size: 1rem;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		border: 2px solid transparent;
+	}
+
+	.btn-primary {
+		background: var(--accent);
+		color: white;
+	}
+
+	.btn-primary:hover {
+		background: var(--accent-hover);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.btn-secondary {
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		border-color: var(--border-color);
+	}
+
+	.btn-secondary:hover {
+		background: var(--bg-tertiary);
+		border-color: var(--accent);
+	}
+
+	.btn-lg {
+		padding: 1.125rem 2.25rem;
+		font-size: 1.125rem;
+	}
+
+	/* Quick Info */
+	.quick-info {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 3rem;
+	}
+
+	.info-card {
+		background: var(--bg-secondary);
+		padding: 1.5rem;
+		border-radius: 12px;
+		border: 1px solid var(--border-color);
+	}
+
+	.info-card h3 {
+		font-size: 1rem;
+		margin-bottom: 1rem;
+		color: var(--text-primary);
+	}
+
+	.info-card ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.info-card li {
+		padding: 0.375rem 0;
+		color: var(--text-secondary);
+		font-size: 0.9375rem;
+	}
+
+	.info-card li::before {
+		content: "•";
+		color: var(--accent);
+		font-weight: bold;
+		display: inline-block;
+		width: 1em;
+	}
+
+	.integrations {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.integration-badge {
+		padding: 0.375rem 0.75rem;
+		background: var(--bg-tertiary);
+		color: var(--text-secondary);
+		border-radius: 6px;
+		font-size: 0.8125rem;
+		font-weight: 500;
+	}
+
+	/* Pros & Cons */
+	.pros-cons {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	.pros,
+	.cons {
+		background: var(--bg-secondary);
+		padding: 2rem;
+		border-radius: 12px;
+		border: 1px solid var(--border-color);
+	}
+
+	.pros h3,
+	.cons h3 {
+		font-size: 1.125rem;
+		margin-bottom: 1rem;
+	}
+
+	.pros ul,
+	.cons ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.pros li,
+	.cons li {
+		padding: 0.5rem 0;
+		padding-left: 1.5rem;
+		position: relative;
+		color: var(--text-secondary);
+	}
+
+	.pros li::before {
+		content: "✓";
+		position: absolute;
+		left: 0;
+		color: #10b981;
+		font-weight: bold;
+	}
+
+	.cons li::before {
+		content: "✕";
+		position: absolute;
+		left: 0;
+		color: #ef4444;
+		font-weight: bold;
+	}
+
+	/* Content */
+	.tool-content {
+		margin-bottom: 3rem;
+		line-height: 1.8;
+	}
+
+	/* CTA Box */
+	.cta-box {
+		background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg-secondary) 100%);
+		padding: 3rem 2rem;
+		border-radius: 16px;
+		text-align: center;
+		margin-bottom: 4rem;
+		border: 1px solid var(--border-color);
+	}
+
+	.cta-box h3 {
+		font-size: 1.75rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.cta-box p {
+		font-size: 1.125rem;
+		color: var(--text-secondary);
+		margin-bottom: 1.5rem;
+	}
+
+	/* Related Tools */
+	.related-section {
+		margin-top: 4rem;
+		padding-top: 4rem;
+		border-top: 1px solid var(--border-color);
+	}
+
+	.related-section h2 {
+		font-size: 2rem;
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 2rem;
+	}
+
+	@media (max-width: 768px) {
+		.hero-content {
+			flex-direction: column;
+		}
+
+		.tool-page h1 {
+			font-size: 2rem;
+		}
+
+		.tagline {
+			font-size: 1rem;
+		}
+
+		.hero-meta {
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.quick-info {
+			grid-template-columns: 1fr;
+		}
+
+		.pros-cons {
+			grid-template-columns: 1fr;
+		}
+
+		.related-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

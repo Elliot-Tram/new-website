@@ -1,101 +1,113 @@
 /*
-  Modern Design System - Inspired by Allo
-  Clean, minimal, professional
- */
+  Warm Editorial Design System
+  Bricolage Grotesque × DM Sans
+  Stone palette — premium, distinctive, French-tech
+*/
 
 :root {
-	/* Light Mode (par défaut) */
-	/* Couleurs principales */
-	--accent: #f97316;
-	--accent-hover: #ea580c;
-	--accent-light: #fff7ed;
+	/* ─── Accent ─── */
+	--accent: #F97316;
+	--accent-hover: #EA580C;
+	--accent-light: #FFF7ED;
+	--accent-glow: rgba(249, 115, 22, 0.14);
 
-	/* Texte */
-	--text-primary: #0F172A;
-	--text-secondary: #64748B;
-	--text-muted: #94A3B8;
-	
-	/* Fond */
-	--bg-primary: #FFFFFF;
-	--bg-secondary: #F8FAFC;
-	--bg-tertiary: #F1F5F9;
-	
-	/* Bordures */
-	--border-color: #E2E8F0;
-	--border-light: #F1F5F9;
-	
-	/* Ombres */
-	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-	
-	/* Grid background */
-	--grid-color: rgba(226, 232, 240, 0.7);
+	/* ─── Text — warm stone ─── */
+	--text-primary: #1C1917;
+	--text-secondary: #78716C;
+	--text-muted: #A8A29E;
 
-	/* Compatibilité anciennes variables */
-	--accent-dark: #c2410c;
-	--black: 15, 23, 42;
-	--gray: 100, 116, 139;
-	--gray-light: 241, 245, 249;
-	--gray-dark: 15, 23, 42;
+	/* ─── Backgrounds — warm white ─── */
+	--bg-primary: #FAFAF9;
+	--bg-secondary: #F5F5F4;
+	--bg-tertiary: #E7E5E4;
+
+	/* ─── Borders ─── */
+	--border-color: #E7E5E4;
+	--border-light: #F5F5F4;
+
+	/* ─── Shadows — warm ─── */
+	--shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.06), 0 1px 2px rgba(28, 25, 23, 0.04);
+	--shadow-md: 0 4px 16px rgba(28, 25, 23, 0.08), 0 1px 4px rgba(28, 25, 23, 0.04);
+	--shadow-lg: 0 12px 40px rgba(28, 25, 23, 0.1), 0 4px 12px rgba(28, 25, 23, 0.06);
+	--shadow-xl: 0 24px 64px rgba(28, 25, 23, 0.12), 0 8px 24px rgba(28, 25, 23, 0.08);
+
+	/* ─── Grid ─── */
+	--grid-color: rgba(120, 113, 108, 0.13);
+
+	/* ─── Typography ─── */
+	--font-display: "Bricolage Grotesque", system-ui, sans-serif;
+	--font-body: "DM Sans", system-ui, sans-serif;
+
+	/* ─── Compat ─── */
+	--accent-dark: #C2410C;
+	--black: 28, 25, 23;
+	--gray: 120, 113, 108;
+	--gray-light: 231, 229, 228;
+	--gray-dark: 28, 25, 23;
 	--box-shadow: var(--shadow-md);
 }
 
 [data-theme="dark"] {
-	/* Dark Mode */
-	/* Couleurs principales */
-	--accent: #fb923c;
-	--accent-hover: #fdba74;
-	--accent-light: #431407;
-	
-	/* Texte */
-	--text-primary: #F1F5F9;
-	--text-secondary: #94A3B8;
-	--text-muted: #64748B;
-	
-	/* Fond */
-	--bg-primary: #0F172A;
-	--bg-secondary: #1E293B;
-	--bg-tertiary: #334155;
-	
-	/* Bordures */
-	--border-color: #334155;
-	--border-light: #1E293B;
-	
-	/* Ombres */
-	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
-	
-	/* Grid background */
-	--grid-color: rgba(51, 65, 85, 0.5);
+	/* ─── Accent ─── */
+	--accent: #FB923C;
+	--accent-hover: #F97316;
+	--accent-light: #3A1500;
+	--accent-glow: rgba(251, 146, 60, 0.12);
 
-	/* Compatibilité anciennes variables */
-	--accent-dark: #fdba74;
-	--black: 241, 245, 249;
-	--gray: 148, 163, 184;
-	--gray-light: 51, 65, 85;
-	--gray-dark: 241, 245, 249;
+	/* ─── Text ─── */
+	--text-primary: #FAFAF9;
+	--text-secondary: #A8A29E;
+	--text-muted: #78716C;
+
+	/* ─── Backgrounds — warm dark ─── */
+	--bg-primary: #141210;
+	--bg-secondary: #1C1917;
+	--bg-tertiary: #292524;
+
+	/* ─── Borders ─── */
+	--border-color: #292524;
+	--border-light: #1C1917;
+
+	/* ─── Shadows ─── */
+	--shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+	--shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45), 0 1px 4px rgba(0, 0, 0, 0.3);
+	--shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4);
+	--shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.65), 0 8px 24px rgba(0, 0, 0, 0.5);
+
+	/* ─── Grid ─── */
+	--grid-color: rgba(120, 113, 108, 0.08);
+
+	/* ─── Compat ─── */
+	--accent-dark: #FDBA74;
+	--black: 250, 250, 249;
+	--gray: 168, 162, 158;
+	--gray-light: 41, 37, 36;
+	--gray-dark: 250, 250, 249;
 	--box-shadow: var(--shadow-md);
 }
-/* Reset et base */
-* {
+
+/* ════════════════════════════════════════
+   RESET
+════════════════════════════════════════ */
+
+*, *::before, *::after {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
 
+/* ════════════════════════════════════════
+   BASE
+════════════════════════════════════════ */
+
 body {
-	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-family: var(--font-body);
 	margin: 0;
 	padding: 0;
 	background-color: var(--bg-primary);
 	color: var(--text-primary);
 	font-size: 16px;
 	line-height: 1.6;
-	transition: background-color 0.3s ease, color 0.3s ease;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -112,73 +124,47 @@ main {
 		padding: 1.5rem 1rem;
 	}
 }
-/* Typographie */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+
+/* ════════════════════════════════════════
+   TYPOGRAPHY
+════════════════════════════════════════ */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font-display);
 	margin: 0 0 1rem 0;
 	color: var(--text-primary);
-	line-height: 1.2;
+	line-height: 1.15;
 	font-weight: 700;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.025em;
 }
 
-h1 {
-	font-size: 2.5rem;
-	line-height: 1.1;
-}
-
-h2 {
-	font-size: 2rem;
-}
-
-h3 {
-	font-size: 1.5rem;
-}
-
-h4 {
-	font-size: 1.25rem;
-}
-
-h5 {
-	font-size: 1.125rem;
-}
-
-h6 {
-	font-size: 1rem;
-}
+h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.035em; }
+h2 { font-size: 2rem; letter-spacing: -0.03em; }
+h3 { font-size: 1.5rem; letter-spacing: -0.02em; }
+h4 { font-size: 1.25rem; letter-spacing: -0.015em; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
 
 @media (max-width: 768px) {
-	h1 {
-		font-size: 2rem;
-	}
-	h2 {
-		font-size: 1.75rem;
-	}
-	h3 {
-		font-size: 1.375rem;
-	}
+	h1 { font-size: 2rem; }
+	h2 { font-size: 1.75rem; }
+	h3 { font-size: 1.375rem; }
 }
 
 p {
 	margin: 0 0 1rem 0;
 	color: var(--text-secondary);
-	line-height: 1.7;
+	line-height: 1.75;
 }
 
-strong,
-b {
-	font-weight: 700;
+strong, b {
+	font-weight: 600;
 	color: var(--text-primary);
 }
 
 a {
 	color: var(--accent);
 	text-decoration: none;
-	transition: color 0.2s ease;
 }
 
 a:hover {
@@ -188,71 +174,111 @@ a:hover {
 .prose p {
 	margin-bottom: 1.5rem;
 }
-/* Formulaires */
-textarea,
-input {
+
+/* ════════════════════════════════════════
+   FORMS
+════════════════════════════════════════ */
+
+textarea, input {
 	width: 100%;
 	font-size: 16px;
-	padding: 0.75rem;
-	border: 1px solid var(--border-color);
-	border-radius: 8px;
+	font-family: var(--font-body);
+	padding: 0.75rem 1rem;
+	border: 1.5px solid var(--border-color);
+	border-radius: 10px;
 	background: var(--bg-primary);
 	color: var(--text-primary);
-	transition: border-color 0.2s ease;
 }
 
-textarea:focus,
-input:focus {
+textarea:focus, input:focus {
 	outline: none;
 	border-color: var(--accent);
 }
 
-/* Tables */
+/* ════════════════════════════════════════
+   TABLES
+════════════════════════════════════════ */
+
 table {
 	width: 100%;
 	border-collapse: collapse;
 }
 
-/* Images */
+th, td {
+	padding: 0.75rem 1rem;
+	text-align: left;
+	border-bottom: 1px solid var(--border-color);
+	font-size: 0.9375rem;
+}
+
+th {
+	font-family: var(--font-display);
+	font-weight: 600;
+	color: var(--text-primary);
+	font-size: 0.8125rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+/* ════════════════════════════════════════
+   IMAGES & MEDIA
+════════════════════════════════════════ */
+
 img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 12px;
 }
 
-/* Code */
+img, video, iframe, svg {
+	transition: none !important;
+}
+
+/* ════════════════════════════════════════
+   CODE
+════════════════════════════════════════ */
+
 code {
-	padding: 0.2em 0.4em;
+	padding: 0.15em 0.45em;
 	background-color: var(--bg-tertiary);
-	border-radius: 4px;
-	font-size: 0.9em;
-	font-family: 'Courier New', Courier, monospace;
+	border-radius: 5px;
+	font-size: 0.875em;
+	font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 	color: var(--accent);
 }
 
 pre {
 	padding: 1.5rem;
-	border-radius: 12px;
-	background-color: var(--bg-tertiary);
+	border-radius: 14px;
+	background-color: var(--bg-secondary);
+	border: 1px solid var(--border-color);
 	overflow-x: auto;
 }
 
 pre > code {
 	all: unset;
+	font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+	font-size: 0.875rem;
 	color: var(--text-primary);
 }
 
-/* Blockquotes */
+/* ════════════════════════════════════════
+   BLOCKQUOTES
+════════════════════════════════════════ */
+
 blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 1rem 0 1rem 1.5rem;
+	border-left: 3px solid var(--accent);
+	padding: 0.75rem 0 0.75rem 1.5rem;
 	margin: 1.5rem 0;
 	font-size: 1.125rem;
 	font-style: italic;
 	color: var(--text-secondary);
 }
 
-/* HR */
+/* ════════════════════════════════════════
+   MISC
+════════════════════════════════════════ */
+
 hr {
 	border: none;
 	border-top: 1px solid var(--border-color);
@@ -267,24 +293,29 @@ hr {
 	height: 1px;
 	width: 1px;
 	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
 	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
 	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
 
-/* Transitions fluides pour le changement de thème */
-* {
-	transition: background-color 0.3s ease, 
-	            border-color 0.3s ease,
-	            color 0.3s ease;
-}
+/* ════════════════════════════════════════
+   THEME TRANSITIONS (selective, not on img)
+════════════════════════════════════════ */
 
-/* Éviter les transitions sur les animations d'images et videos */
-img, video, iframe {
-	transition: none;
+body,
+header,
+footer,
+nav,
+main,
+section,
+div,
+span,
+a,
+p,
+h1, h2, h3, h4, h5, h6,
+button,
+input,
+textarea,
+label {
+	transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
 }

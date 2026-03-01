@@ -7,91 +7,105 @@ import ToolCard from '../components/ToolCard.astro';
 import { SITE_TITLE } from '../consts';
 
 const allTools = await getCollection('tools');
-const featuredTools = allTools
-	.sort((a, b) => b.data.rating - a.data.rating)
-	.slice(0, 6);
+const sortedTools = allTools.sort((a, b) => b.data.rating - a.data.rating);
+const featuredTools = sortedTools.slice(0, 6);
+
+const categories = [
+	{ slug: 'CRM', label: 'CRM', icon: '◈' },
+	{ slug: 'Email Marketing', label: 'Email Marketing', icon: '◉' },
+	{ slug: 'Analytics', label: 'Analytics', icon: '◇' },
+	{ slug: 'Project Management', label: 'Gestion de projet', icon: '▣' },
+	{ slug: 'SEO', label: 'SEO', icon: '◎' },
+	{ slug: 'Automation', label: 'Automation', icon: '◈' },
+	{ slug: 'Social Media', label: 'Réseaux sociaux', icon: '◉' },
+	{ slug: 'Prospecting', label: 'Prospection', icon: '◇' },
+];
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead 
-			title={`${SITE_TITLE} - Les meilleurs outils SaaS pour Marketing, Growth & GTM`} 
-			description="Découvrez notre sélection des meilleurs outils SaaS pour booster votre croissance. CRM, Email Marketing, Analytics, et plus encore." 
+		<BaseHead
+			title={`${SITE_TITLE} — Les meilleurs outils SaaS pour votre croissance`}
+			description="Découvrez notre sélection des meilleurs outils SaaS pour accélérer votre marketing, vos ventes et votre acquisition. Comparatifs experts, avis francophones."
 		/>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<!-- Hero Section -->
-			<section class="hero">
-				<!-- Grid background -->
-				<div class="hero-grid" aria-hidden="true"></div>
 
-				<!-- Floating tool logo bubbles -->
+			<!-- ═══ HERO ═══ -->
+			<section class="hero">
+				<div class="hero-grid" aria-hidden="true"></div>
+				<div class="hero-glow" aria-hidden="true"></div>
+
+				<!-- Floating logos -->
 				<div class="hero-bubbles" aria-hidden="true">
-					{allTools.sort((a, b) => b.data.rating - a.data.rating).slice(0, 8).map((tool, i) => (
+					{sortedTools.slice(0, 8).map((tool, i) => (
 						<a href={`/outils/${tool.id}`} class={`bubble bubble-${i + 1}`} title={tool.data.name} tabindex="-1">
-							<img src={tool.data.logo} alt={tool.data.name} width="40" height="40" loading="lazy" />
+							<img src={tool.data.logo} alt={tool.data.name} width="44" height="44" loading="lazy" />
 						</a>
 					))}
 				</div>
 
-				<!-- Main content -->
+				<!-- Content -->
 				<div class="hero-content">
 					<div class="hero-badge">
 						<span class="badge-dot"></span>
-						<span>{allTools.length} outils référencés et testés</span>
+						<span>{allTools.length} outils testés & référencés</span>
 					</div>
 
 					<h1 class="hero-title">
-						Les meilleurs outils pour votre
-						<span class="gradient-text"> Marketing & Growth</span>
+						Les meilleurs outils<br/>
+						pour votre <em class="accent-word">growth</em>
 					</h1>
 
 					<p class="hero-subtitle">
-						Découvrez, comparez et choisissez les meilleurs outils SaaS pour accélérer votre croissance.
-						Sélection experte pour les équipes marketing, sales et growth.
+						Découvrez, comparez et choisissez les meilleurs outils SaaS
+						pour votre marketing, vos ventes et votre acquisition.
 					</p>
 
 					<div class="hero-cta">
-						<a href="/outils" class="btn btn-primary">
-							Découvrir les outils
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-								<path d="M5 12h14M12 5l7 7-7 7"/>
-							</svg>
+						<a href="/outils" class="btn-hero-primary">
+							<span>Découvrir les outils</span>
+							<span class="btn-arrow">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M5 12h14M12 5l7 7-7 7"/>
+								</svg>
+							</span>
 						</a>
-						<a href="/blog" class="btn btn-ghost">
+						<a href="/blog" class="btn-hero-ghost">
 							Lire le blog
 						</a>
 					</div>
 
-					<!-- Stats -->
-					<div class="stats">
-						<div class="stat-item">
-							<span class="stat-number">{allTools.length}+</span>
-							<span class="stat-label">Outils testés</span>
+					<!-- Stats bar -->
+					<div class="stats-bar">
+						<div class="stat">
+							<span class="stat-n">{allTools.length}+</span>
+							<span class="stat-l">Outils testés</span>
 						</div>
-						<div class="stat-divider"></div>
-						<div class="stat-item">
-							<span class="stat-number">10+</span>
-							<span class="stat-label">Catégories</span>
+						<div class="stat-sep"></div>
+						<div class="stat">
+							<span class="stat-n">10+</span>
+							<span class="stat-l">Catégories</span>
 						</div>
-						<div class="stat-divider"></div>
-						<div class="stat-item">
-							<span class="stat-number">100%</span>
-							<span class="stat-label">Gratuit</span>
+						<div class="stat-sep"></div>
+						<div class="stat">
+							<span class="stat-n">100%</span>
+							<span class="stat-l">Gratuit</span>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<!-- Featured Tools -->
+			<!-- ═══ FEATURED TOOLS ═══ -->
 			{featuredTools.length > 0 && (
-				<section class="featured-section">
+				<section class="section featured-section">
 					<div class="section-header">
-						<h2>🔥 Outils à la une</h2>
-						<p>Notre sélection des meilleurs outils du moment</p>
+						<div class="section-eyebrow">Sélection</div>
+						<h2 class="section-title">Outils à la une</h2>
+						<p class="section-sub">Notre sélection des meilleurs outils du moment, testés par nos experts</p>
 					</div>
 
 					<div class="tools-grid">
@@ -111,10 +125,10 @@ const featuredTools = allTools
 						))}
 					</div>
 
-					<div class="section-footer">
-						<a href="/outils" class="btn btn-outline">
+					<div class="section-cta">
+						<a href="/outils" class="link-arrow">
 							Voir tous les outils
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 								<path d="M5 12h14M12 5l7 7-7 7"/>
 							</svg>
 						</a>
@@ -122,71 +136,120 @@ const featuredTools = allTools
 				</section>
 			)}
 
-			<!-- Categories -->
-			<section class="categories-section">
+			<!-- ═══ CATEGORIES ═══ -->
+			<section class="section categories-section">
 				<div class="section-header">
-					<h2>📂 Parcourir par catégorie</h2>
-					<p>Trouvez l'outil parfait pour vos besoins</p>
+					<div class="section-eyebrow">Catalogue</div>
+					<h2 class="section-title">Parcourir par catégorie</h2>
+					<p class="section-sub">Trouvez l'outil parfait pour chaque besoin</p>
 				</div>
 
-				<div class="categories-grid">
-					<a href="/outils?category=CRM" class="category-card">
-						<div class="category-icon">📊</div>
-						<h3>CRM</h3>
-						<p>Gérez vos relations clients</p>
-					</a>
-					<a href="/outils?category=Email Marketing" class="category-card">
-						<div class="category-icon">✉️</div>
-						<h3>Email Marketing</h3>
-						<p>Campagnes et automation</p>
-					</a>
-					<a href="/outils?category=Analytics" class="category-card">
-						<div class="category-icon">📈</div>
-						<h3>Analytics</h3>
-						<p>Suivez vos performances</p>
-					</a>
-					<a href="/outils?category=SEO" class="category-card">
-						<div class="category-icon">🔍</div>
-						<h3>SEO</h3>
-						<p>Optimisez votre référencement</p>
-					</a>
-					<a href="/outils?category=Social Media" class="category-card">
-						<div class="category-icon">📱</div>
-						<h3>Social Media</h3>
-						<p>Gérez vos réseaux sociaux</p>
-					</a>
-					<a href="/outils?category=Automation" class="category-card">
-						<div class="category-icon">⚡</div>
-						<h3>Automation</h3>
-						<p>Automatisez vos workflows</p>
-					</a>
+				<div class="categories-scroll-wrapper">
+					<div class="categories-scroll">
+						{categories.map((cat) => (
+							<a href={`/outils?category=${cat.slug}`} class="cat-chip">
+								<span class="cat-icon">{cat.icon}</span>
+								<span>{cat.label}</span>
+							</a>
+						))}
+					</div>
+				</div>
+
+				<!-- Category grid for desktop -->
+				<div class="cat-grid">
+					{categories.map((cat) => (
+						<a href={`/outils?category=${cat.slug}`} class="cat-card">
+							<span class="cat-card-icon">{cat.icon}</span>
+							<span class="cat-card-label">{cat.label}</span>
+							<svg class="cat-card-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
+					))}
 				</div>
 			</section>
 
-			<!-- CTA Section -->
-			<section class="cta-section">
+			<!-- ═══ WHY US ═══ -->
+			<section class="section why-section">
+				<div class="why-grid">
+					<div class="why-text">
+						<div class="section-eyebrow">Notre approche</div>
+						<h2 class="section-title" style="text-align:left; margin-bottom:1.25rem;">
+							Des recommandations<br/>que vous pouvez<br/><em style="font-style:normal; color:var(--accent);">vraiment</em> faire confiance
+						</h2>
+						<p class="why-desc">
+							Chaque outil est testé en conditions réelles par notre équipe avant d'être référencé.
+							Pas de contenus sponsorisés cachés, pas de biais d'affiliation non déclaré.
+						</p>
+						<div class="why-points">
+							<div class="why-point">
+								<span class="why-check">✓</span>
+								<span>Testé en conditions réelles, pas seulement en démo</span>
+							</div>
+							<div class="why-point">
+								<span class="why-check">✓</span>
+								<span>Comparatifs objectifs vs alternatives</span>
+							</div>
+							<div class="why-point">
+								<span class="why-check">✓</span>
+								<span>Tarifs actualisés en 2025</span>
+							</div>
+							<div class="why-point">
+								<span class="why-check">✓</span>
+								<span>Perspectives francophones et européennes</span>
+							</div>
+						</div>
+					</div>
+					<div class="why-numbers">
+						<div class="why-stat-card">
+							<span class="why-stat-n">{allTools.length}+</span>
+							<span class="why-stat-l">Outils analysés</span>
+						</div>
+						<div class="why-stat-card">
+							<span class="why-stat-n">4.5★</span>
+							<span class="why-stat-l">Note moyenne</span>
+						</div>
+						<div class="why-stat-card why-stat-wide">
+							<span class="why-stat-n">100%</span>
+							<span class="why-stat-l">Indépendant & gratuit</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ CTA FINALE ═══ -->
+			<section class="cta-final">
+				<div class="cta-glow" aria-hidden="true"></div>
 				<div class="cta-content">
-					<h2>Prêt à booster votre croissance ?</h2>
-					<p>Découvrez les outils qui transformeront votre stratégie marketing et sales</p>
-					<a href="/outils" class="btn btn-primary btn-lg">
+					<div class="section-eyebrow cta-eyebrow">Commencer maintenant</div>
+					<h2 class="cta-title">
+						Prêt à trouver<br/>l'outil qui change tout ?
+					</h2>
+					<p class="cta-desc">
+						Rejoignez des milliers d'équipes qui font confiance à nos recommandations.
+					</p>
+					<a href="/outils" class="btn-cta">
 						Explorer tous les outils
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 							<path d="M5 12h14M12 5l7 7-7 7"/>
 						</svg>
 					</a>
 				</div>
 			</section>
+
 		</main>
 		<Footer />
 	</body>
 </html>
 
 <style>
-	/* ===== HERO ===== */
+	/* ═════════════════════════════════════════
+	   HERO
+	═════════════════════════════════════════ */
+
 	.hero {
 		position: relative;
 		margin: 0 -1.5rem;
-		padding: 0;
 		overflow: hidden;
 	}
 
@@ -197,13 +260,26 @@ const featuredTools = allTools
 		background-image:
 			linear-gradient(var(--grid-color) 1px, transparent 1px),
 			linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-		background-size: 44px 44px;
-		-webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
-		mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+		background-size: 48px 48px;
+		-webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 88%);
+		mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 88%);
 		z-index: 0;
 	}
 
-	/* Floating bubbles */
+	/* Warm glow from center */
+	.hero-glow {
+		position: absolute;
+		top: -20%;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 900px;
+		height: 600px;
+		background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 65%);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	/* ─── Bubbles ─── */
 	.hero-bubbles {
 		position: absolute;
 		inset: 0;
@@ -216,19 +292,19 @@ const featuredTools = allTools
 		border-radius: 50%;
 		background: var(--bg-primary);
 		border: 1px solid var(--border-color);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+		box-shadow: var(--shadow-md);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 10px;
 		overflow: hidden;
-		text-decoration: none;
 		pointer-events: all;
 		transition: transform 0.3s ease, box-shadow 0.3s ease;
 	}
 
 	.bubble:hover {
-		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+		box-shadow: var(--shadow-lg);
+		transform: scale(1.08) !important;
 	}
 
 	.bubble img {
@@ -238,48 +314,49 @@ const featuredTools = allTools
 		border-radius: 0;
 	}
 
-	/* Bubble positions & sizes */
-	.bubble-1 { width: 68px; height: 68px; top: 18%; left: 6%; animation: float1 7s ease-in-out infinite; }
-	.bubble-2 { width: 52px; height: 52px; top: 52%; left: 2%; animation: float2 9s ease-in-out infinite; }
-	.bubble-3 { width: 60px; height: 60px; top: 74%; left: 12%; animation: float1 8s ease-in-out infinite 1s; }
-	.bubble-4 { width: 68px; height: 68px; top: 18%; right: 6%; animation: float2 7s ease-in-out infinite 0.5s; }
-	.bubble-5 { width: 52px; height: 52px; top: 52%; right: 2%; animation: float1 9s ease-in-out infinite 1.5s; }
-	.bubble-6 { width: 60px; height: 60px; top: 74%; right: 12%; animation: float2 8s ease-in-out infinite 2s; }
-	.bubble-7 { width: 44px; height: 44px; top: 35%; left: 16%; animation: float1 10s ease-in-out infinite 3s; }
-	.bubble-8 { width: 44px; height: 44px; top: 35%; right: 16%; animation: float2 10s ease-in-out infinite 2.5s; }
+	/* Positions & animations */
+	.bubble-1 { width: 72px; height: 72px; top: 16%; left: 5%; animation: float-a 7s ease-in-out infinite; }
+	.bubble-2 { width: 54px; height: 54px; top: 50%; left: 1.5%; animation: float-b 9s ease-in-out infinite; }
+	.bubble-3 { width: 62px; height: 62px; top: 76%; left: 11%; animation: float-a 8s ease-in-out infinite 1.2s; }
+	.bubble-4 { width: 72px; height: 72px; top: 16%; right: 5%; animation: float-b 7s ease-in-out infinite 0.6s; }
+	.bubble-5 { width: 54px; height: 54px; top: 50%; right: 1.5%; animation: float-a 9s ease-in-out infinite 1.8s; }
+	.bubble-6 { width: 62px; height: 62px; top: 76%; right: 11%; animation: float-b 8s ease-in-out infinite 2.4s; }
+	.bubble-7 { width: 46px; height: 46px; top: 33%; left: 17%; animation: float-a 11s ease-in-out infinite 3.5s; }
+	.bubble-8 { width: 46px; height: 46px; top: 33%; right: 17%; animation: float-b 11s ease-in-out infinite 2.8s; }
 
-	@keyframes float1 {
+	@keyframes float-a {
 		0%, 100% { transform: translateY(0px) rotate(0deg); }
-		50% { transform: translateY(-14px) rotate(2deg); }
+		50% { transform: translateY(-16px) rotate(2.5deg); }
 	}
-	@keyframes float2 {
+	@keyframes float-b {
 		0%, 100% { transform: translateY(0px) rotate(0deg); }
 		50% { transform: translateY(-10px) rotate(-2deg); }
 	}
 
-	/* Hero content */
+	/* ─── Hero content ─── */
 	.hero-content {
 		position: relative;
 		z-index: 2;
 		text-align: center;
-		max-width: 760px;
+		max-width: 780px;
 		margin: 0 auto;
-		padding: 5rem 1.5rem 4rem;
+		padding: 5.5rem 1.5rem 5rem;
 	}
 
+	/* Badge */
 	.hero-badge {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
-		background: var(--bg-secondary);
+		background: var(--bg-primary);
 		border: 1px solid var(--border-color);
 		border-radius: 100px;
-		padding: 0.4rem 1rem;
+		padding: 0.45rem 1.125rem;
 		font-size: 0.8125rem;
 		font-weight: 500;
 		color: var(--text-secondary);
-		margin-bottom: 2rem;
-		letter-spacing: 0.01em;
+		margin-bottom: 2.25rem;
+		box-shadow: var(--shadow-sm);
 	}
 
 	.badge-dot {
@@ -288,41 +365,60 @@ const featuredTools = allTools
 		border-radius: 50%;
 		background: var(--accent);
 		flex-shrink: 0;
-		animation: pulse-dot 2s ease-in-out infinite;
+		animation: pulse-dot 2.5s ease-in-out infinite;
 	}
 
 	@keyframes pulse-dot {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.6; transform: scale(0.85); }
+		0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(249,115,22,0.4); }
+		50% { opacity: 0.8; transform: scale(0.9); box-shadow: 0 0 0 4px rgba(249,115,22,0); }
 	}
 
+	/* Title */
 	.hero-title {
-		font-size: clamp(2.25rem, 5.5vw, 4rem);
+		font-family: var(--font-display, "Bricolage Grotesque", system-ui);
+		font-size: clamp(2.5rem, 6vw, 4.5rem);
 		font-weight: 800;
-		line-height: 1.1;
-		letter-spacing: -0.03em;
+		line-height: 1.08;
+		letter-spacing: -0.04em;
 		margin-bottom: 1.5rem;
 		color: var(--text-primary);
 	}
 
-	.gradient-text {
-		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+	.accent-word {
+		font-style: normal;
+		background: linear-gradient(135deg, var(--accent) 20%, #ea580c 80%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
+		position: relative;
 	}
 
+	/* Underline decoration on accent word */
+	.accent-word::after {
+		content: '';
+		position: absolute;
+		bottom: 0.06em;
+		left: 0;
+		right: 0;
+		height: 0.06em;
+		background: linear-gradient(135deg, var(--accent), #ea580c);
+		border-radius: 2px;
+		opacity: 0.35;
+	}
+
+	/* Subtitle */
 	.hero-subtitle {
 		font-size: 1.125rem;
 		color: var(--text-secondary);
 		line-height: 1.7;
 		margin-bottom: 2.5rem;
-		max-width: 580px;
+		max-width: 560px;
 		margin-left: auto;
 		margin-right: auto;
 		font-weight: 400;
 	}
 
+	/* CTA buttons */
 	.hero-cta {
 		display: flex;
 		gap: 0.875rem;
@@ -331,105 +427,124 @@ const featuredTools = allTools
 		margin-bottom: 3.5rem;
 	}
 
-	.btn {
+	.btn-hero-primary {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.8125rem 1.625rem;
-		border-radius: 10px;
-		font-weight: 600;
+		gap: 0.625rem;
+		padding: 0.875rem 1.75rem;
+		background: var(--accent);
+		color: white;
+		border-radius: 12px;
+		font-weight: 700;
+		font-size: 0.9375rem;
+		text-decoration: none;
+		letter-spacing: -0.01em;
+		box-shadow: 0 2px 0 rgba(234, 88, 12, 0.5), 0 8px 24px rgba(249, 115, 22, 0.25);
+		transition: all 0.2s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.btn-hero-primary::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, rgba(255,255,255,0.12), transparent);
+		pointer-events: none;
+	}
+
+	.btn-hero-primary:hover {
+		background: var(--accent-hover);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 0 rgba(194, 65, 12, 0.5), 0 16px 40px rgba(249, 115, 22, 0.35);
+		color: white;
+	}
+
+	.btn-hero-primary:active {
+		transform: translateY(0);
+	}
+
+	.btn-arrow {
+		display: flex;
+		align-items: center;
+		transition: transform 0.2s ease;
+	}
+
+	.btn-hero-primary:hover .btn-arrow {
+		transform: translateX(3px);
+	}
+
+	.btn-hero-ghost {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.875rem 1.625rem;
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		border: 1.5px solid var(--border-color);
+		border-radius: 12px;
+		font-weight: 500;
 		font-size: 0.9375rem;
 		text-decoration: none;
 		transition: all 0.2s ease;
-		border: 1.5px solid transparent;
-		letter-spacing: -0.01em;
+		box-shadow: var(--shadow-sm);
 	}
 
-	.btn-primary {
-		background: var(--accent);
-		color: white;
-		box-shadow: 0 1px 2px rgba(249, 115, 22, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-	}
-
-	.btn-primary:hover {
-		background: var(--accent-hover);
-		transform: translateY(-1px);
-		box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
-	}
-
-	.btn-ghost {
-		background: transparent;
-		color: var(--text-primary);
-		border-color: var(--border-color);
-	}
-
-	.btn-ghost:hover {
-		background: var(--bg-secondary);
+	.btn-hero-ghost:hover {
 		border-color: var(--text-muted);
-	}
-
-	.btn-outline {
-		background: transparent;
-		color: var(--accent);
-		border-color: var(--accent);
-	}
-
-	.btn-outline:hover {
-		background: var(--accent);
-		color: white;
-	}
-
-	.btn-lg {
-		padding: 1rem 2rem;
-		font-size: 1rem;
+		background: var(--bg-secondary);
+		color: var(--text-primary);
 	}
 
 	/* Stats bar */
-	.stats {
+	.stats-bar {
 		display: inline-flex;
 		align-items: center;
 		gap: 0;
-		padding: 1rem 2rem;
-		background: var(--bg-secondary);
-		border-radius: 14px;
+		padding: 0.875rem 1.75rem;
+		background: var(--bg-primary);
 		border: 1px solid var(--border-color);
+		border-radius: 14px;
+		box-shadow: var(--shadow-sm);
 	}
 
-	.stat-item {
+	.stat {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.2rem;
-		padding: 0 1.5rem;
+		gap: 0.15rem;
+		padding: 0 1.375rem;
 	}
 
-	.stat-divider {
+	.stat-sep {
 		width: 1px;
-		height: 36px;
+		height: 32px;
 		background: var(--border-color);
 		flex-shrink: 0;
 	}
 
-	.stat-number {
-		font-size: 1.5rem;
-		font-weight: 700;
+	.stat-n {
+		font-family: var(--font-display, "Bricolage Grotesque", system-ui);
+		font-size: 1.375rem;
+		font-weight: 800;
 		color: var(--text-primary);
 		line-height: 1;
-		letter-spacing: -0.02em;
+		letter-spacing: -0.03em;
 	}
 
-	.stat-label {
-		font-size: 0.75rem;
+	.stat-l {
+		font-size: 0.7rem;
 		color: var(--text-muted);
 		font-weight: 500;
-		letter-spacing: 0.01em;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
 	}
 
-	/* Sections */
-	.featured-section,
-	.categories-section,
-	.cta-section {
-		margin-top: 5rem;
+	/* ═════════════════════════════════════════
+	   SECTIONS COMMON
+	═════════════════════════════════════════ */
+
+	.section {
+		margin-top: 6rem;
 	}
 
 	.section-header {
@@ -437,149 +552,463 @@ const featuredTools = allTools
 		margin-bottom: 3rem;
 	}
 
-	.section-header h2 {
-		font-size: 2.25rem;
-		font-weight: 700;
+	.section-eyebrow {
+		display: inline-block;
+		font-family: var(--font-display, "Bricolage Grotesque", system-ui);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
 		margin-bottom: 0.75rem;
 	}
 
-	.section-header p {
-		font-size: 1.125rem;
-		color: var(--text-secondary);
+	.section-title {
+		font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+		font-weight: 800;
+		letter-spacing: -0.035em;
+		margin-bottom: 0.75rem;
 	}
+
+	.section-sub {
+		font-size: 1.0625rem;
+		color: var(--text-secondary);
+		max-width: 500px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	/* ═════════════════════════════════════════
+	   FEATURED TOOLS
+	═════════════════════════════════════════ */
 
 	.tools-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-		gap: 2rem;
+		gap: 1.5rem;
 		margin-bottom: 2rem;
 	}
 
-	.section-footer {
+	.section-cta {
 		text-align: center;
-		margin-top: 3rem;
+		margin-top: 2.5rem;
 	}
 
-	/* Categories Grid */
-	.categories-grid {
+	.link-arrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--accent);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		text-decoration: none;
+		transition: gap 0.2s ease, color 0.2s ease;
+	}
+
+	.link-arrow:hover {
+		gap: 0.75rem;
+		color: var(--accent-hover);
+	}
+
+	/* ═════════════════════════════════════════
+	   CATEGORIES
+	═════════════════════════════════════════ */
+
+	/* Mobile: scrollable chips */
+	.categories-scroll-wrapper {
+		display: none;
+		overflow: hidden;
+	}
+
+	.categories-scroll {
+		display: flex;
+		gap: 0.625rem;
+		overflow-x: auto;
+		padding-bottom: 0.5rem;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.categories-scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+	.cat-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		white-space: nowrap;
+		padding: 0.625rem 1.125rem;
+		border-radius: 100px;
+		border: 1.5px solid var(--border-color);
+		background: var(--bg-primary);
+		color: var(--text-secondary);
+		font-weight: 500;
+		font-size: 0.9rem;
+		text-decoration: none;
+		transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+	}
+
+	.cat-chip:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+		background: var(--accent-light);
+	}
+
+	.cat-icon {
+		font-size: 0.875rem;
+		opacity: 0.7;
+	}
+
+	/* Desktop: grid */
+	.cat-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		gap: 1.5rem;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
 	}
 
-	.category-card {
+	.cat-card {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1.125rem 1.25rem;
+		border-radius: 12px;
+		border: 1.5px solid var(--border-color);
+		background: var(--bg-primary);
+		color: var(--text-secondary);
+		font-weight: 500;
+		font-size: 0.9375rem;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		box-shadow: var(--shadow-sm);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.cat-card::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--accent-light);
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+
+	.cat-card:hover::before {
+		opacity: 1;
+	}
+
+	.cat-card:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.cat-card-icon {
+		font-size: 1rem;
+		flex-shrink: 0;
+		position: relative;
+		z-index: 1;
+		opacity: 0.6;
+	}
+
+	.cat-card-label {
+		flex: 1;
+		position: relative;
+		z-index: 1;
+	}
+
+	.cat-card-arrow {
+		flex-shrink: 0;
+		opacity: 0;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+		position: relative;
+		z-index: 1;
+	}
+
+	.cat-card:hover .cat-card-arrow {
+		opacity: 1;
+		transform: translateX(2px);
+	}
+
+	/* ═════════════════════════════════════════
+	   WHY US
+	═════════════════════════════════════════ */
+
+	.why-section {
+		background: var(--bg-secondary);
+		border-radius: 24px;
+		border: 1px solid var(--border-color);
+		padding: 4rem 3rem;
+	}
+
+	.why-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+	}
+
+	.why-desc {
+		font-size: 1rem;
+		color: var(--text-secondary);
+		line-height: 1.75;
+		margin-bottom: 2rem;
+	}
+
+	.why-points {
+		display: flex;
+		flex-direction: column;
+		gap: 0.875rem;
+	}
+
+	.why-point {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		font-size: 0.9375rem;
+		color: var(--text-secondary);
+		line-height: 1.5;
+	}
+
+	.why-check {
+		color: var(--accent);
+		font-weight: 700;
+		flex-shrink: 0;
+		font-size: 0.875rem;
+		margin-top: 0.05em;
+	}
+
+	.why-numbers {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+
+	.why-stat-card {
 		background: var(--bg-primary);
 		border: 1px solid var(--border-color);
-		border-radius: 12px;
-		padding: 2rem 1.5rem;
-		text-align: center;
-		text-decoration: none;
-		color: inherit;
-		transition: all 0.3s ease;
+		border-radius: 16px;
+		padding: 1.75rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		box-shadow: var(--shadow-sm);
 	}
 
-	.category-card:hover {
-		border-color: var(--accent);
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-lg);
+	.why-stat-wide {
+		grid-column: 1 / -1;
+		background: linear-gradient(135deg, var(--accent-light), var(--bg-primary));
+		border-color: rgba(249, 115, 22, 0.2);
 	}
 
-	.category-icon {
-		font-size: 3rem;
-		margin-bottom: 1rem;
-	}
-
-	.category-card h3 {
-		font-size: 1.125rem;
-		font-weight: 700;
-		margin-bottom: 0.5rem;
-		color: var(--text-primary);
-	}
-
-	.category-card p {
-		font-size: 0.875rem;
-		color: var(--text-secondary);
-		margin: 0;
-	}
-
-	.category-card:hover h3 {
+	.why-stat-n {
+		font-family: var(--font-display, "Bricolage Grotesque", system-ui);
+		font-size: 2rem;
+		font-weight: 800;
 		color: var(--accent);
+		letter-spacing: -0.04em;
+		line-height: 1;
 	}
 
-	/* CTA Section */
-	.cta-section {
-		background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg-secondary) 100%);
+	.why-stat-l {
+		font-size: 0.8125rem;
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+
+	/* ═════════════════════════════════════════
+	   CTA FINALE
+	═════════════════════════════════════════ */
+
+	.cta-final {
+		margin-top: 6rem;
+		background: var(--text-primary);
 		border-radius: 24px;
-		padding: 4rem 2rem;
+		padding: 5.5rem 2rem;
 		text-align: center;
-		border: 1px solid var(--border-color);
+		position: relative;
+		overflow: hidden;
 	}
 
-	.cta-content h2 {
-		font-size: 2.5rem;
-		font-weight: 700;
+	/* Orange glow */
+	.cta-glow {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 700px;
+		height: 500px;
+		transform: translate(-50%, -50%);
+		background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.22) 0%, transparent 65%);
+		pointer-events: none;
+	}
+
+	/* Grid overlay on CTA */
+	.cta-final::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+		background-size: 44px 44px;
+		-webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+		mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	.cta-content {
+		position: relative;
+		z-index: 1;
+	}
+
+	.cta-eyebrow {
+		color: rgba(249, 115, 22, 0.9);
 		margin-bottom: 1rem;
 	}
 
-	.cta-content p {
-		font-size: 1.25rem;
-		color: var(--text-secondary);
-		margin-bottom: 2rem;
-		max-width: 600px;
+	.cta-title {
+		font-family: var(--font-display, "Bricolage Grotesque", system-ui);
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 800;
+		letter-spacing: -0.04em;
+		line-height: 1.1;
+		color: #FAFAF9;
+		margin-bottom: 1.25rem;
+	}
+
+	.cta-desc {
+		font-size: 1.0625rem;
+		color: rgba(250, 250, 249, 0.6);
+		margin-bottom: 2.5rem;
+		max-width: 440px;
 		margin-left: auto;
 		margin-right: auto;
+		line-height: 1.65;
+	}
+
+	.btn-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 1rem 2.125rem;
+		background: var(--accent);
+		color: white;
+		border-radius: 14px;
+		font-weight: 700;
+		font-size: 1rem;
+		text-decoration: none;
+		letter-spacing: -0.01em;
+		box-shadow: 0 4px 0 rgba(194, 65, 12, 0.6), 0 16px 40px rgba(249, 115, 22, 0.35);
+		transition: all 0.2s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.btn-cta::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, rgba(255,255,255,0.12), transparent);
+		pointer-events: none;
+	}
+
+	.btn-cta:hover {
+		background: var(--accent-hover);
+		transform: translateY(-3px);
+		box-shadow: 0 6px 0 rgba(194, 65, 12, 0.6), 0 24px 56px rgba(249, 115, 22, 0.45);
+		color: white;
+	}
+
+	.btn-cta:active {
+		transform: translateY(-1px);
+	}
+
+	/* ═════════════════════════════════════════
+	   RESPONSIVE
+	═════════════════════════════════════════ */
+
+	@media (max-width: 1024px) {
+		.cat-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 
 	@media (max-width: 768px) {
+		.hero {
+			margin: 0 -1rem;
+		}
+
 		.hero-bubbles {
 			display: none;
 		}
 
 		.hero-content {
-			padding: 3.5rem 1.5rem 3rem;
+			padding: 3.75rem 1.25rem 3.5rem;
 		}
 
 		.hero-title {
-			font-size: 2rem;
-			letter-spacing: -0.02em;
+			font-size: 2.25rem;
+			letter-spacing: -0.03em;
 		}
 
 		.hero-subtitle {
 			font-size: 1rem;
 		}
 
-		.stats {
-			gap: 0;
-			padding: 0.875rem 1rem;
+		.stats-bar {
+			padding: 0.75rem 1.25rem;
 		}
 
-		.stat-item {
+		.stat {
 			padding: 0 1rem;
 		}
 
-		.stat-number {
-			font-size: 1.25rem;
+		.stat-n {
+			font-size: 1.125rem;
+		}
+
+		.section {
+			margin-top: 4rem;
 		}
 
 		.tools-grid {
 			grid-template-columns: 1fr;
-			gap: 1.5rem;
+			gap: 1.25rem;
 		}
 
-		.categories-grid {
-			grid-template-columns: repeat(2, 1fr);
+		/* Show scroll chips on mobile, hide grid */
+		.categories-scroll-wrapper {
+			display: block;
 		}
 
-		.cta-section {
-			padding: 3rem 1.5rem;
+		.cat-grid {
+			display: none;
 		}
 
-		.cta-content h2 {
-			font-size: 1.75rem;
+		/* Why section */
+		.why-section {
+			padding: 2.5rem 1.5rem;
 		}
 
-		.cta-content p {
-			font-size: 1rem;
+		.why-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.why-numbers {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		/* CTA */
+		.cta-final {
+			padding: 4rem 1.5rem;
+			border-radius: 20px;
+		}
+
+		.cta-title {
+			font-size: 2rem;
 		}
 	}
 </style>

@@ -2,7 +2,7 @@
 name: "Pipedrive"
 tagline: "Le CRM pensé par des commerciaux, pour des commerciaux"
 description: "Pipedrive est un CRM visuel et intuitif qui aide les équipes commerciales à gérer leur pipeline de vente, automatiser les tâches répétitives et conclure plus de deals. Conçu pour les PME et startups qui veulent un CRM puissant sans la complexité de Salesforce."
-logo: "https://logo.clearbit.com/pipedrive.com"
+logo: "https://github.com/pipedrive.png?size=200"
 screenshot: "https://image.thum.io/get/width/1200/crop/630/https://www.pipedrive.com"
 category: "CRM"
 subcategories: ["Vente", "Pipeline", "Automatisation"]

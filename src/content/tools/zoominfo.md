@@ -2,7 +2,8 @@
 name: ZoomInfo
 tagline: ZoomInfo enrichit vos bases de données avec des informations précises pour améliorer la connexion avec des prospects.
 description: ZoomInfo enrichit vos bases de données avec des informations précises pour améliorer la connexion avec des prospects.
-logo: https://logo.clearbit.com/zoominfo.com
+logo: "https://github.com/zoominfo.png?size=200"
+screenshot: "https://image.thum.io/get/width/1200/crop/630/https://www.zoominfo.com"
 category: Enrichissement
 subcategories:
   - Automation

@@ -2,7 +2,8 @@
 name: "HubSpot"
 tagline: "Le CRM tout-en-un pour le marketing, les ventes et le service client"
 description: "HubSpot est une plateforme complète qui combine CRM, marketing automation, ventes et service client. Parfait pour les entreprises qui veulent centraliser toutes leurs opérations GTM en un seul endroit."
-logo: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400"
+logo: "https://cdn.simpleicons.org/hubspot"
+screenshot: "https://image.thum.io/get/width/1200/crop/630/https://www.hubspot.com"
 category: "CRM"
 subcategories: ["Email Marketing", "Sales", "Automation"]
 pricing: "Freemium"

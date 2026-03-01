@@ -2,7 +2,8 @@
 name: "Notion"
 tagline: "L'espace de travail tout-en-un pour vos notes, docs et projets"
 description: "Notion est un outil de productivité ultra-flexible qui combine notes, bases de données, wikis et gestion de projet. Parfait pour centraliser toute la connaissance de votre équipe."
-logo: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400"
+logo: "https://cdn.simpleicons.org/notion"
+screenshot: "https://image.thum.io/get/width/1200/crop/630/https://www.notion.so"
 category: "Project Management"
 subcategories: ["Documentation", "Collaboration"]
 pricing: "Freemium"

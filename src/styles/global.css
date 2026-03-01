@@ -30,6 +30,9 @@
 	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 	
+	/* Grid background */
+	--grid-color: rgba(226, 232, 240, 0.7);
+
 	/* Compatibilité anciennes variables */
 	--accent-dark: #c2410c;
 	--black: 15, 23, 42;
@@ -66,6 +69,9 @@
 	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
 	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 	
+	/* Grid background */
+	--grid-color: rgba(51, 65, 85, 0.5);
+
 	/* Compatibilité anciennes variables */
 	--accent-dark: #fdba74;
 	--black: 241, 245, 249;
@@ -81,23 +87,8 @@
 	padding: 0;
 }
 
-@font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-
 body {
-	font-family: "Atkinson", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	margin: 0;
 	padding: 0;
 	background-color: var(--bg-primary);

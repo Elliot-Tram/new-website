@@ -25,37 +25,63 @@ const featuredTools = allTools
 		<main>
 			<!-- Hero Section -->
 			<section class="hero">
-				<h1 class="hero-title">
-					Les Meilleurs Outils SaaS pour
-					<span class="gradient-text">Marketing & Growth</span>
-				</h1>
-				<p class="hero-subtitle">
-					Découvrez, comparez et choisissez les meilleurs outils pour accélérer votre croissance.
-					Notre sélection experte pour les équipes marketing, sales et growth.
-				</p>
-				<div class="hero-cta">
-					<a href="/outils" class="btn btn-primary">
-						Découvrir les outils
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M5 12h14M12 5l7 7-7 7"/>
-						</svg>
-					</a>
-					<a href="/blog" class="btn btn-secondary">Lire le blog</a>
+				<!-- Grid background -->
+				<div class="hero-grid" aria-hidden="true"></div>
+
+				<!-- Floating tool logo bubbles -->
+				<div class="hero-bubbles" aria-hidden="true">
+					{allTools.sort((a, b) => b.data.rating - a.data.rating).slice(0, 8).map((tool, i) => (
+						<a href={`/outils/${tool.id}`} class={`bubble bubble-${i + 1}`} title={tool.data.name} tabindex="-1">
+							<img src={tool.data.logo} alt={tool.data.name} width="40" height="40" loading="lazy" />
+						</a>
+					))}
 				</div>
 
-				<!-- Stats -->
-				<div class="stats">
-					<div class="stat-item">
-						<span class="stat-number">{allTools.length}+</span>
-						<span class="stat-label">Outils référencés</span>
+				<!-- Main content -->
+				<div class="hero-content">
+					<div class="hero-badge">
+						<span class="badge-dot"></span>
+						<span>{allTools.length} outils référencés et testés</span>
 					</div>
-					<div class="stat-item">
-						<span class="stat-number">10+</span>
-						<span class="stat-label">Catégories</span>
+
+					<h1 class="hero-title">
+						Les meilleurs outils pour votre
+						<span class="gradient-text"> Marketing & Growth</span>
+					</h1>
+
+					<p class="hero-subtitle">
+						Découvrez, comparez et choisissez les meilleurs outils SaaS pour accélérer votre croissance.
+						Sélection experte pour les équipes marketing, sales et growth.
+					</p>
+
+					<div class="hero-cta">
+						<a href="/outils" class="btn btn-primary">
+							Découvrir les outils
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+								<path d="M5 12h14M12 5l7 7-7 7"/>
+							</svg>
+						</a>
+						<a href="/blog" class="btn btn-ghost">
+							Lire le blog
+						</a>
 					</div>
-					<div class="stat-item">
-						<span class="stat-number">100%</span>
-						<span class="stat-label">Gratuit</span>
+
+					<!-- Stats -->
+					<div class="stats">
+						<div class="stat-item">
+							<span class="stat-number">{allTools.length}+</span>
+							<span class="stat-label">Outils testés</span>
+						</div>
+						<div class="stat-divider"></div>
+						<div class="stat-item">
+							<span class="stat-number">10+</span>
+							<span class="stat-label">Catégories</span>
+						</div>
+						<div class="stat-divider"></div>
+						<div class="stat-item">
+							<span class="stat-number">100%</span>
+							<span class="stat-label">Gratuit</span>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -156,19 +182,127 @@ const featuredTools = allTools
 </html>
 
 <style>
-	/* Hero Section */
+	/* ===== HERO ===== */
 	.hero {
+		position: relative;
+		margin: 0 -1.5rem;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	/* Grid background */
+	.hero-grid {
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(var(--grid-color) 1px, transparent 1px),
+			linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+		background-size: 44px 44px;
+		-webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+		mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+		z-index: 0;
+	}
+
+	/* Floating bubbles */
+	.hero-bubbles {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	.bubble {
+		position: absolute;
+		border-radius: 50%;
+		background: var(--bg-primary);
+		border: 1px solid var(--border-color);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px;
+		overflow: hidden;
+		text-decoration: none;
+		pointer-events: all;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.bubble:hover {
+		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+	}
+
+	.bubble img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		border-radius: 0;
+	}
+
+	/* Bubble positions & sizes */
+	.bubble-1 { width: 68px; height: 68px; top: 18%; left: 6%; animation: float1 7s ease-in-out infinite; }
+	.bubble-2 { width: 52px; height: 52px; top: 52%; left: 2%; animation: float2 9s ease-in-out infinite; }
+	.bubble-3 { width: 60px; height: 60px; top: 74%; left: 12%; animation: float1 8s ease-in-out infinite 1s; }
+	.bubble-4 { width: 68px; height: 68px; top: 18%; right: 6%; animation: float2 7s ease-in-out infinite 0.5s; }
+	.bubble-5 { width: 52px; height: 52px; top: 52%; right: 2%; animation: float1 9s ease-in-out infinite 1.5s; }
+	.bubble-6 { width: 60px; height: 60px; top: 74%; right: 12%; animation: float2 8s ease-in-out infinite 2s; }
+	.bubble-7 { width: 44px; height: 44px; top: 35%; left: 16%; animation: float1 10s ease-in-out infinite 3s; }
+	.bubble-8 { width: 44px; height: 44px; top: 35%; right: 16%; animation: float2 10s ease-in-out infinite 2.5s; }
+
+	@keyframes float1 {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		50% { transform: translateY(-14px) rotate(2deg); }
+	}
+	@keyframes float2 {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		50% { transform: translateY(-10px) rotate(-2deg); }
+	}
+
+	/* Hero content */
+	.hero-content {
+		position: relative;
+		z-index: 2;
 		text-align: center;
-		padding: 4rem 0 3rem;
-		max-width: 900px;
+		max-width: 760px;
 		margin: 0 auto;
+		padding: 5rem 1.5rem 4rem;
+	}
+
+	.hero-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 100px;
+		padding: 0.4rem 1rem;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: var(--text-secondary);
+		margin-bottom: 2rem;
+		letter-spacing: 0.01em;
+	}
+
+	.badge-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--accent);
+		flex-shrink: 0;
+		animation: pulse-dot 2s ease-in-out infinite;
+	}
+
+	@keyframes pulse-dot {
+		0%, 100% { opacity: 1; transform: scale(1); }
+		50% { opacity: 0.6; transform: scale(0.85); }
 	}
 
 	.hero-title {
-		font-size: clamp(2rem, 5vw, 3.5rem);
-		font-weight: 700;
+		font-size: clamp(2.25rem, 5.5vw, 4rem);
+		font-weight: 800;
 		line-height: 1.1;
+		letter-spacing: -0.03em;
 		margin-bottom: 1.5rem;
+		color: var(--text-primary);
 	}
 
 	.gradient-text {
@@ -179,56 +313,59 @@ const featuredTools = allTools
 	}
 
 	.hero-subtitle {
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		color: var(--text-secondary);
-		line-height: 1.6;
-		margin-bottom: 2rem;
-		max-width: 700px;
+		line-height: 1.7;
+		margin-bottom: 2.5rem;
+		max-width: 580px;
 		margin-left: auto;
 		margin-right: auto;
+		font-weight: 400;
 	}
 
 	.hero-cta {
 		display: flex;
-		gap: 1rem;
+		gap: 0.875rem;
 		justify-content: center;
 		flex-wrap: wrap;
-		margin-bottom: 3rem;
+		margin-bottom: 3.5rem;
 	}
 
 	.btn {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
-		padding: 0.875rem 1.75rem;
+		padding: 0.8125rem 1.625rem;
 		border-radius: 10px;
 		font-weight: 600;
-		font-size: 1rem;
+		font-size: 0.9375rem;
 		text-decoration: none;
 		transition: all 0.2s ease;
-		border: 2px solid transparent;
+		border: 1.5px solid transparent;
+		letter-spacing: -0.01em;
 	}
 
 	.btn-primary {
 		background: var(--accent);
 		color: white;
+		box-shadow: 0 1px 2px rgba(249, 115, 22, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
 	}
 
 	.btn-primary:hover {
 		background: var(--accent-hover);
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-lg);
+		transform: translateY(-1px);
+		box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
 	}
 
-	.btn-secondary {
-		background: var(--bg-secondary);
+	.btn-ghost {
+		background: transparent;
 		color: var(--text-primary);
 		border-color: var(--border-color);
 	}
 
-	.btn-secondary:hover {
-		background: var(--bg-tertiary);
-		border-color: var(--accent);
+	.btn-ghost:hover {
+		background: var(--bg-secondary);
+		border-color: var(--text-muted);
 	}
 
 	.btn-outline {
@@ -243,17 +380,18 @@ const featuredTools = allTools
 	}
 
 	.btn-lg {
-		padding: 1.125rem 2.25rem;
-		font-size: 1.125rem;
+		padding: 1rem 2rem;
+		font-size: 1rem;
 	}
 
+	/* Stats bar */
 	.stats {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-		gap: 2rem;
-		padding: 2rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0;
+		padding: 1rem 2rem;
 		background: var(--bg-secondary);
-		border-radius: 16px;
+		border-radius: 14px;
 		border: 1px solid var(--border-color);
 	}
 
@@ -261,21 +399,30 @@ const featuredTools = allTools
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.2rem;
+		padding: 0 1.5rem;
+	}
+
+	.stat-divider {
+		width: 1px;
+		height: 36px;
+		background: var(--border-color);
+		flex-shrink: 0;
 	}
 
 	.stat-number {
-		font-size: 2.5rem;
+		font-size: 1.5rem;
 		font-weight: 700;
-		color: var(--accent);
+		color: var(--text-primary);
 		line-height: 1;
+		letter-spacing: -0.02em;
 	}
 
 	.stat-label {
-		font-size: 0.875rem;
-		color: var(--text-secondary);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		font-weight: 500;
+		letter-spacing: 0.01em;
 	}
 
 	/* Sections */
@@ -384,12 +531,17 @@ const featuredTools = allTools
 	}
 
 	@media (max-width: 768px) {
-		.hero {
-			padding: 2rem 0;
+		.hero-bubbles {
+			display: none;
+		}
+
+		.hero-content {
+			padding: 3.5rem 1.5rem 3rem;
 		}
 
 		.hero-title {
 			font-size: 2rem;
+			letter-spacing: -0.02em;
 		}
 
 		.hero-subtitle {
@@ -397,8 +549,16 @@ const featuredTools = allTools
 		}
 
 		.stats {
-			grid-template-columns: 1fr;
-			gap: 1.5rem;
+			gap: 0;
+			padding: 0.875rem 1rem;
+		}
+
+		.stat-item {
+			padding: 0 1rem;
+		}
+
+		.stat-number {
+			font-size: 1.25rem;
 		}
 
 		.tools-grid {
